@@ -4,7 +4,7 @@ export function clickOutside(node: HTMLElement) {
 	const handleClick = (event: MouseEvent) => {
 		clearTimeout(clickTimer);
 
-		clickTimer = setTimeout(() => {
+		clickTimer = window.setTimeout(() => {
 			if (node && !node.contains(event.target as Node)) {
 				node.dispatchEvent(new CustomEvent('outclick', { detail: node }));
 			}
