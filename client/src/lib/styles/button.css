@@ -1,0 +1,17 @@
+@layer components {
+	.button-base-styles {
+		@apply inline-flex h-10 items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+	}
+
+	.btn {
+		@apply button-base-styles bg-primary text-primary-foreground hover:bg-primary/90;
+	}
+
+	.btn-icon {
+		@apply button-base-styles p-2 bg-background hover:bg-accent hover:text-accent-foreground;
+	}
+
+	.btn-menu {
+		@apply button-base-styles justify-start w-full hover:bg-accent hover:text-accent-foreground;
+	}
+}
