@@ -1,5 +1,6 @@
 import type { ChartData, ChartInputs, LineGenerator } from '../models/chart.model';
 import * as d3 from 'd3';
+import { formJsonToYaml } from './common.utils';
 
 export const lineGenerator: LineGenerator<ChartData> = (linedata, x, y): string =>
 	d3
@@ -64,14 +65,15 @@ export const downloadChartSVG = (svgSelector: string) => {
 };
 
 export const downloadInputData = (chartValues: ChartInputs) => {
-	const stringData = JSON.stringify(chartValues);
-	const blob = new Blob([stringData], { type: 'octet-stream' });
+	const yamlString = formJsonToYaml(chartValues);
+	console.log(yamlString);
+	const blob = new Blob([yamlString], { type: 'octet-stream' });
 	const href = URL.createObjectURL(blob);
 
 	const a = Object.assign(document.createElement('a'), {
 		href,
 		style: 'display: none',
-		download: 'inputs.json'
+		download: 'inputs.yaml'
 	});
 
 	a.click();

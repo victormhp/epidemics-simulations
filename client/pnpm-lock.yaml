@@ -67,6 +67,9 @@ devDependencies:
   svelte-check:
     specifier: ^3.4.3
     version: 3.4.3(postcss-load-config@4.0.1)(postcss@8.4.30)(svelte@4.0.5)
+  tailwind-merge:
+    specifier: ^1.14.0
+    version: 1.14.0
   tailwindcss:
     specifier: ^3.3.2
     version: 3.3.3
@@ -79,9 +82,6 @@ devDependencies:
   vite:
     specifier: ^4.4.2
     version: 4.4.2(@types/node@20.6.5)
-  zod:
-    specifier: ^3.22.2
-    version: 3.22.2
 
 packages:
 
@@ -2556,6 +2556,10 @@ packages:
       magic-string: 0.30.3
       periscopic: 3.1.0
 
+  /tailwind-merge@1.14.0:
+    resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
+    dev: true
+
   /tailwindcss@3.3.3:
     resolution: {integrity: sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==}
     engines: {node: '>=14.0.0'}
@@ -2761,8 +2765,4 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-    dev: true
-
-  /zod@3.22.2:
-    resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
     dev: true

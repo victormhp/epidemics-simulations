@@ -1,3 +1,5 @@
+import type { ChartInputs } from '$lib/models';
+
 export function clickOutside(node: HTMLElement) {
 	let clickTimer: number;
 
@@ -18,4 +20,10 @@ export function clickOutside(node: HTMLElement) {
 			document.removeEventListener('click', handleClick, true);
 		}
 	};
+}
+
+export function formJsonToYaml(data: ChartInputs): string {
+	return Object.entries(data)
+		.map(([key, value]) => `${key}: ${value}`)
+		.join('\n');
 }

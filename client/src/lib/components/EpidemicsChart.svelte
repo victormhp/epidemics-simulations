@@ -1,16 +1,9 @@
 <script lang="ts">
-	import type { ChartData, ChartInputs } from '$lib/models';
-	import ClipPath from './Chart/ClipPath.svelte';
-	import Zoomable from './Chart/Zoomable.svelte';
-	import Legend from './Chart/Legend.svelte';
-	import Labels from './Chart/Labels.svelte';
-	import Lines from './Chart/Lines.svelte';
-	import Chart from './Chart/Chart.svelte';
-	import Axis from './Chart/Axis.svelte';
+	import { ClipPath, Axis, Zoomable, Legend, Labels, Lines, Chart } from '$lib/components/Chart';
+	import { chartResponse } from '$lib/stores';
 	import * as d3 from 'd3';
 
-	export let chartData: ChartData[];
-	export let chartInputs: ChartInputs;
+	const chartData = $chartResponse.positions;
 
 	const chartLines = d3.groups(chartData, (d) => d.strategy);
 	const strategyLines = chartLines.filter((d) => !d[0].startsWith('Simulation'));
@@ -19,8 +12,8 @@
 	const legends = [...strategyLines.map((d) => d[0]), 'Simulations'];
 	const colors = d3.scaleOrdinal(d3.schemeCategory10).domain(legends);
 
-	const width = 800;
-	const height = 600;
+	const width = 1000;
+	const height = 700;
 	const margines = {
 		marginTop: 30,
 		marginRight: 40,
@@ -47,7 +40,7 @@
 		.range([dimensions.height, 0]);
 </script>
 
-<Chart {chartInputs} {xScale} {yScale} {legends} {dimensions}>
+<Chart {xScale} {yScale} {legends} {dimensions}>
 	<Zoomable>
 		<ClipPath id="clip" />
 		<Axis />

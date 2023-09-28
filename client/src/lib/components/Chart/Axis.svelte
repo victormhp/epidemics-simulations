@@ -19,7 +19,7 @@
 <g style="font-size: 12;" text-anchor="end">
 	{#each yScale.ticks() as tick}
 		<g transform="translate(0, {yScale(tick)})">
-			<line stroke="#777" x2="-6" x1="670" stroke-width="0.5" stroke-opacity="0.2" />
+			<line stroke="#777" x2="-6" x1={dimensions.width} stroke-width="0.5" stroke-opacity="0.2" />
 			<text fill="#777" x="-9" dy="0.32em">{tick}</text>
 		</g>
 	{/each}

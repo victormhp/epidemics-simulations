@@ -17,7 +17,6 @@ export interface ChartInputs {
 }
 
 export interface ChartConfig {
-	chartInputs: ChartInputs;
 	dimensions: Dimensions;
 	xScale: ScaleLinear<number, number, never>;
 	yScale: ScaleLinear<number, number, never>;
@@ -41,6 +40,7 @@ export interface ChartData extends Point {
 }
 
 export interface ChartResponse {
+	loading: boolean;
 	positions: ChartData[];
 	inputs: ChartInputs;
 }

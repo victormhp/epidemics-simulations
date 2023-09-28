@@ -1,11 +1,10 @@
 <script lang="ts">
-	import ChartMenu from './ChartMenu/ChartMenu.svelte';
-	import type { ChartInputs, Dimensions } from '$lib/models';
+	import { ChartMenu } from './ChartMenu';
+	import type { Dimensions } from '$lib/models';
 	import { setChartConfig } from '$lib/stores';
-	import { fade } from 'svelte/transition';
 	import type { ScaleLinear } from 'd3';
+	import { fade } from 'svelte/transition';
 
-	export let chartInputs: ChartInputs;
 	export let xScale: ScaleLinear<number, number, never>;
 	export let yScale: ScaleLinear<number, number, never>;
 	export let dimensions: Dimensions;
@@ -13,7 +12,7 @@
 
 	const linesDisplayed = legends.reduce((map, key) => map.set(key, true), new Map());
 
-	setChartConfig({ chartInputs, dimensions, legends, xScale, yScale, linesDisplayed });
+	setChartConfig({ dimensions, legends, xScale, yScale, linesDisplayed });
 </script>
 
 <div class="relative">

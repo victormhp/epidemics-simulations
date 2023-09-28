@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { FileBarChart2, FileImage, FileText } from 'lucide-svelte';
 	import { downloadChartPNG, downloadChartSVG, downloadInputData, clickOutside } from '$lib/utils';
-	import { getChartConfig } from '$lib/stores';
+	import { chartResponse } from '$lib/stores';
 
 	export let closeMenu: () => void;
-
-	const chartConfig = getChartConfig();
-	const chartInputs = $chartConfig.chartInputs;
+	const chartInputs = $chartResponse.inputs;
 </script>
 
 <div
