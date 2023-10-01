@@ -2,6 +2,7 @@ blinker==1.6.2
 click==8.1.7
 contourpy==1.1.0
 cycler==0.11.0
+dill==0.3.7
 EoN==1.1
 Flask==2.3.3
 Flask-Cors==4.0.0
@@ -18,6 +19,7 @@ packaging==23.1
 Pillow==10.0.0
 pyparsing==3.0.9
 python-dateutil==2.8.2
+PyYAML==6.0.1
 scipy==1.11.2
 simplification==0.6.11
 six==1.16.0
