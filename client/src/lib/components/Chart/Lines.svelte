@@ -1,54 +1,46 @@
 <script lang="ts">
 	import { getChartConfig } from '$lib/stores';
-	import type { ChartData } from '$lib/models';
 	import { lineGenerator } from '$lib/utils';
-	import * as d3 from 'd3';
+	import type { ChartData } from '$lib/models';
+	import type { ScaleOrdinal } from 'd3';
 
-	export let data: [string, ChartData[]][];
-	export let strokeWidth = '1';
-	export let colors: d3.ScaleOrdinal<string, string, never>;
+	export let data: [string, ChartData[]];
+	export let colors: ScaleOrdinal<string, string, never>;
 
-	let pathElements: SVGPathElement[] = [];
-	let linesDisplayed: Map<string, boolean>;
+	// If the 'name' in the data array represents a numeric value, it is replaced with 'Simulation' for clarity.
+	// This is done to simplify attribute retrieval and to handle scenarios where the chart has multiple simulations.
+	let [name, values] = data;
+	if (!isNaN(Number(name))) {
+		name = 'Simulation';
+	}
+
 	const chartConfig = getChartConfig();
+
+	const getStrokeColor = (name: string) => (name === 'Simulation' ? 'gray' : colors(name));
+	const getStrokeWidth = (name: string) => (name === 'Simulation' ? 1 : 3);
 
 	$: xScale = $chartConfig.xScale;
 	$: yScale = $chartConfig.yScale;
 
-	$: {
-		linesDisplayed = $chartConfig.linesDisplayed;
+	$: linesDisplayed = $chartConfig.linesDisplayed;
 
-		pathElements.forEach((e) => {
-			const path = d3.select(e);
-			let name = path.attr('data-name');
-
-			if (name.startsWith('Simulation')) {
-				name = 'Simulations';
-			}
-
-			const visibility = linesDisplayed.get(name);
-			path
-				.transition()
-				.duration(200)
-				.attr('stroke-opacity', visibility ? '1' : '0');
-		});
-	}
-
-	function getStrokeColor(name: string) {
-		return name.startsWith('Simulation') ? 'gray' : colors(name);
-	}
+	$: getStrokeOpacity = (name: string) => (linesDisplayed.get(name) ? 1 : 0);
 </script>
 
 <g>
-	{#each data as [name, values], i}
-		<path
-			bind:this={pathElements[i]}
-			data-name={name}
-			fill="none"
-			stroke={getStrokeColor(name)}
-			stroke-width={strokeWidth}
-			stroke-opacity="1"
-			d={lineGenerator(values, xScale, yScale)}
-		/>
-	{/each}
+	<path
+		data-name={name}
+		class="line"
+		fill="none"
+		stroke={getStrokeColor(name)}
+		stroke-width={getStrokeWidth(name)}
+		stroke-opacity={getStrokeOpacity(name)}
+		d={lineGenerator(values, xScale, yScale)}
+	/>
 </g>
+
+<style>
+	.line {
+		transition: stroke-opacity 0.3s ease;
+	}
+</style>

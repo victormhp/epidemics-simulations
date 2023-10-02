@@ -4,13 +4,21 @@
 	import * as d3 from 'd3';
 
 	const chartData = $chartResponse.positions;
-
 	const chartLines = d3.groups(chartData, (d) => d.strategy);
-	const strategyLines = chartLines.filter((d) => !d[0].startsWith('Simulation'));
-	const simulationLines = chartLines.filter((d) => d[0].startsWith('Simulation'));
 
-	const legends = [...strategyLines.map((d) => d[0]), 'Simulations'];
-	const colors = d3.scaleOrdinal(d3.schemeCategory10).domain(legends);
+	const legends = chartLines.map((line) => line[0]);
+	const chartLegends = legends.reduce((result, item) => {
+		if (!isNaN(Number(item))) {
+			if (!result.includes('Simulation')) {
+				result.push('Simulation');
+			}
+		} else {
+			result.push(item);
+		}
+		return result;
+	}, [] as string[]);
+
+	const colors = d3.scaleOrdinal(d3.schemeCategory10).domain(chartLegends);
 
 	const width = 1000;
 	const height = 700;
@@ -40,13 +48,14 @@
 		.range([dimensions.height, 0]);
 </script>
 
-<Chart {xScale} {yScale} {legends} {dimensions}>
+<Chart {xScale} {yScale} legends={chartLegends} {dimensions}>
 	<Zoomable>
 		<ClipPath id="clip" />
 		<Axis />
 		<g id="lines" clip-path="url(#clip)">
-			<Lines data={simulationLines} {colors} />
-			<Lines data={strategyLines} {colors} strokeWidth="3" />
+			{#each chartLines as line}
+				<Lines data={line} {colors} />
+			{/each}
 		</g>
 	</Zoomable>
 	<Labels xLabel="t" yLabel="Number infected" />
