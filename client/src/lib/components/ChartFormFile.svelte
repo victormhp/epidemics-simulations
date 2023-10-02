@@ -65,7 +65,7 @@
 		on:submit|preventDefault={generateChartFromSimulationObject}
 	>
 		<FileDropzone id="simInputs" bind:files={simFile}>
-			<span slot="files">YAML file</span>
+			<span slot="files">Simulation Object file</span>
 		</FileDropzone>
 		<button type="submit" class="btn">Generate</button>
 	</form>
