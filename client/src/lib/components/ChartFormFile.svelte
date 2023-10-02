@@ -57,7 +57,7 @@
 		<FileDropzone id="yamlInput" bind:files={yamlFile} allowedExtensions={'.yaml'}>
 			<span slot="files">YAML file</span>
 		</FileDropzone>
-		<button type="submit" class="btn">Generate</button>
+		<button disabled={$chartResponse.loading} type="submit" class="btn">Generate</button>
 	</form>
 	<form
 		class="space-y-10"
@@ -67,6 +67,6 @@
 		<FileDropzone id="simInputs" bind:files={simFile}>
 			<span slot="files">Simulation Object file</span>
 		</FileDropzone>
-		<button type="submit" class="btn">Generate</button>
+		<button disabled={$chartResponse.loading} type="submit" class="btn">Generate</button>
 	</form>
 </div>
