@@ -10,7 +10,8 @@
 	// If the 'name' in the data array represents a numeric value, it is replaced with 'Simulation' for clarity.
 	// This is done to simplify attribute retrieval and to handle scenarios where the chart has multiple simulations.
 	let [name, values] = data;
-	if (!isNaN(Number(name))) {
+	const simulatonIteration = name.split(' ')[1];
+	if (!isNaN(Number(simulatonIteration))) {
 		name = 'Simulation';
 	}
 

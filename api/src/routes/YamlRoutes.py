@@ -25,7 +25,8 @@ def generate_chart_from_yaml():
 
                     model_data = get_model_data(model, tau, gamma, rho)
 
-                    return jsonify({"inputs": data, "positions": model_data})
+                    response = jsonify({"inputs": data, "positions": model_data})
+                    return response
                 else:
                     return jsonify({"error": "Invalid YAML file"})
             except yaml.YAMLError as e:

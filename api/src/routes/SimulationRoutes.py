@@ -1,4 +1,6 @@
 from flask import Blueprint, request, jsonify
+from EoN.simulation_investigation import Simulation_Investigation
+from src.utils.Simulations import get_model_data_from_sim
 import dill
 
 main = Blueprint("sim_blueprint", __name__)
@@ -10,8 +12,15 @@ def generate_chart_from_sim():
         uploaded_file = request.files.get("file")
 
         try:
-            sim = dill.load(uploaded_file)
-            return sim.summary()
+            sim: Simulation_Investigation = dill.load(uploaded_file)
+            if sim is not None:
+                t, D = sim.summary()
+
+                model_data = get_model_data_from_sim(t, D)
+                response = jsonify({"positions": model_data})
+                return response
+            else:
+                return jsonify({"error": "Invalid Simulation object file"})
         except Exception as e:
             response = jsonify({"error": "Invalid file format or not a valid simulation object"}), 400
             return response

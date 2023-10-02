@@ -3,7 +3,7 @@
 	import { Upload } from 'lucide-svelte';
 
 	export let id: string;
-	export let allowedExtensions: string;
+	export let allowedExtensions: string = '*';
 	export let files: FileList | undefined = undefined;
 </script>
 

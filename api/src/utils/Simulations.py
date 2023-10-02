@@ -42,7 +42,7 @@ def run_simulations(model, iterations, G, tau, gamma, rho, tmax):
         points = [[ti, Ii] for ti, Ii in zip(t.tolist(), I.tolist())]
         simplified_data = simplify_coords(points, 0.05)
 
-        simulations.extend([{"strategy": f"Simulation{i + 1}", "x": x, "y": y} for [x, y] in simplified_data])
+        simulations.extend([{"strategy": f"Simulation {i + 1}", "x": x, "y": y} for [x, y] in simplified_data])
 
     return simulations
 
@@ -64,5 +64,17 @@ def get_model_data(model: str, tau: float, gamma: float, rho: float):
     strategies = model_strategies[model]
     for label, strategy in strategies.items():
         data.extend(run_strategy(model, strategy, label, G, tau, gamma, rho, tmax))
+
+    return data
+
+
+def get_model_data_from_sim(t, D):
+    data = []
+
+    for key, values in D.items():
+        points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
+        simplified_data = simplify_coords(points, 0.05)
+
+        data.extend([{"strategy": f"Simulation: {key}", "x": x, "y": y} for [x, y] in simplified_data])
 
     return data

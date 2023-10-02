@@ -16,6 +16,6 @@
 	}
 
 	.btn-tab {
-		@apply button-base-styles w-[50%] p-2 rounded-none rounded-t-lg border-b-2 bg-background text-foreground hover:bg-white hover:border-foreground hover:bg-muted transition-colors;
+		@apply button-base-styles w-[50%] p-2 rounded-none rounded-t-lg border-b-2 bg-background text-foreground hover:bg-white hover:border-foreground hover:bg-muted transition-colors focus-visible:ring-offset-0;
 	}
 }
