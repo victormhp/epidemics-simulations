@@ -3,6 +3,9 @@
 	import { chartResponse } from '$lib/stores';
 	import * as d3 from 'd3';
 
+	export let width: number;
+	export let height: number;
+
 	const chartData = $chartResponse.positions;
 	const chartLines = d3.groups(chartData, (d) => d.strategy);
 
@@ -21,8 +24,6 @@
 
 	const colors = d3.scaleOrdinal(d3.schemeCategory10).domain(chartLegends);
 
-	const width = 1000;
-	const height = 700;
 	const margines = {
 		marginTop: 30,
 		marginRight: 40,
@@ -31,8 +32,8 @@
 	};
 
 	$: dimensions = {
-		width: width - margines.marginLeft - margines.marginRight,
-		height: height - margines.marginBottom - margines.marginTop,
+		width: width - 64 - margines.marginLeft - margines.marginRight,
+		height: height - 64 - margines.marginBottom - margines.marginTop,
 		...margines
 	};
 
@@ -49,16 +50,18 @@
 		.range([dimensions.height, 0]);
 </script>
 
-<Chart {xScale} {yScale} legends={chartLegends} {dimensions}>
-	<Zoomable>
-		<ClipPath id="clip" />
-		<Axis />
-		<g id="lines" clip-path="url(#clip)">
-			{#each chartLines as line}
-				<Lines data={line} {colors} />
-			{/each}
-		</g>
-	</Zoomable>
-	<Labels xLabel="t" yLabel="Number infected" />
-	<Legend {colors} />
-</Chart>
+{#key dimensions}
+	<Chart {xScale} {yScale} legends={chartLegends} {dimensions}>
+		<Zoomable>
+			<ClipPath id="clip" />
+			<Axis />
+			<g id="lines" clip-path="url(#clip)">
+				{#each chartLines as line}
+					<Lines data={line} {colors} />
+				{/each}
+			</g>
+		</Zoomable>
+		<Labels xLabel="t" yLabel="Number infected" />
+		<Legend {colors} />
+	</Chart>
+{/key}

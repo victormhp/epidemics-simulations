@@ -2,8 +2,8 @@
 	import { getChartConfig } from '$lib/stores';
 
 	const chartConfig = getChartConfig();
-	const dimensions = $chartConfig.dimensions;
 
+	$: dimensions = $chartConfig.dimensions;
 	$: xScale = $chartConfig.xScale;
 	$: yScale = $chartConfig.yScale;
 </script>

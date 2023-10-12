@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getChartConfig, updateChartConfig, chartActions } from '$lib/stores/';
 	import type { ChartData } from '$lib/models';
+	import { chartResponse } from '$lib/stores';
 	import * as d3 from 'd3';
 
 	let graphElement: SVGGElement;
@@ -10,6 +11,8 @@
 	const xScale = $chartConfig.xScale;
 	const yScale = $chartConfig.yScale;
 	const dimensions = $chartConfig.dimensions;
+
+	const isZoomEnable = $chartResponse.inputs.zoom;
 
 	function zoomed(event: d3.D3ZoomEvent<SVGSVGElement, ChartData>) {
 		const zoomState = event.transform;
@@ -42,12 +45,16 @@
 	$: graph.call(zoom);
 </script>
 
-<g bind:this={graphElement}>
-	<rect
-		width={dimensions.width}
-		height={dimensions.height}
-		style="pointer-events: all;"
-		fill="white"
-	/>
+{#if isZoomEnable}
+	<g bind:this={graphElement}>
+		<rect
+			width={dimensions.width}
+			height={dimensions.height}
+			style="pointer-events: all;"
+			fill="white"
+		/>
+		<slot />
+	</g>
+{:else}
 	<slot />
-</g>
+{/if}
