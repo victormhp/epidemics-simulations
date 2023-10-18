@@ -28,6 +28,8 @@
 			<Loader2 class="h-16 w-16 animate-spin opacity-20" />
 		</div>
 	{:else if $chartResponse.positions.length > 0}
-		<EpidemicsChart width={containerWidth} height={containerHeight} />
+		<div in:fade>
+			<EpidemicsChart width={containerWidth} height={containerHeight} />
+		</div>
 	{/if}
 </section>

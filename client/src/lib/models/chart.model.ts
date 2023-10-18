@@ -14,6 +14,7 @@ export interface ChartInputs {
 	transmissionRate: string;
 	recoveryRate: string;
 	fractionInfected: string;
+	zoom?: string;
 }
 
 export interface ChartConfig {
