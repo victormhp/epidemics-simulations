@@ -9,7 +9,7 @@
 	const legends = $chartConfig.legends;
 
 	const getFillColor = (legend: string) => {
-		if (legend === 'Simulation') {
+		if (legend.startsWith('Simulation')) {
 			return 'gray';
 		}
 		return colors(legend);

@@ -7,18 +7,19 @@
 	export let data: [string, ChartData[]];
 	export let colors: ScaleOrdinal<string, string, never>;
 
-	// If the 'name' in the data array represents a numeric value, it is replaced with 'Simulation' for clarity.
+	// If the 'name' in the data array has a numeric value, it is replaced with 'Simulation ${state}' for clarity.
 	// This is done to simplify attribute retrieval and to handle scenarios where the chart has multiple simulations.
 	let [name, values] = data;
-	const simulatonIteration = name.split(' ')[1];
-	if (!isNaN(Number(simulatonIteration))) {
-		name = 'Simulation';
+
+	const match = name.match(/Simulation ([A-Z]) - (\d+)/);
+	if (match) {
+		name = name.split(' - ')[0].trim();
 	}
 
 	const chartConfig = getChartConfig();
 
-	const getStrokeColor = (name: string) => (name === 'Simulation' ? 'gray' : colors(name));
-	const getStrokeWidth = (name: string) => (name === 'Simulation' ? 1 : 3);
+	const getStrokeColor = (name: string) => (name.startsWith('Simulation') ? 'gray' : colors(name));
+	const getStrokeWidth = (name: string) => (name.startsWith('Simulation') ? 1 : 3);
 
 	$: xScale = $chartConfig.xScale;
 	$: yScale = $chartConfig.yScale;

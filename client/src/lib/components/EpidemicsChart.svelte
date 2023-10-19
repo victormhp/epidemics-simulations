@@ -11,10 +11,13 @@
 
 	const legends = chartLines.map((line) => line[0]);
 	const chartLegends = legends.reduce((result, item) => {
-		const simulationIteration = item.split(' ')[1];
-		if (!isNaN(Number(simulationIteration))) {
-			if (!result.includes('Simulation')) {
-				result.push('Simulation');
+		const match = item.match(/Simulation ([A-Z]) - (\d+)/);
+
+		if (match) {
+			const [, state, iteration] = match;
+
+			if (!result.includes(`Simulation ${state}`)) {
+				result.push(`Simulation ${state}`);
 			}
 		} else {
 			result.push(item);

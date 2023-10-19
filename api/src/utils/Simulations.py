@@ -1,6 +1,8 @@
 import EoN
 import networkx as nx
+from EoN import Simulation_Investigation
 from simplification.cutil import simplify_coords
+from typing import List
 
 model_strategies = {
     "sir": {
@@ -14,6 +16,12 @@ model_strategies = {
         "Heterogeneous meanfield": EoN.SIS_heterogeneous_meanfield_from_graph,
         "Compact Pairwise": EoN.SIS_compact_pairwise_from_graph,
     },
+}
+
+model_simulations = {
+    "sir": EoN.fast_SIR,
+    "sis": EoN.fast_SIS,
+    "nonMarkovSir": EoN.fast_nonMarkov_SIR
 }
 
 
@@ -31,26 +39,27 @@ def run_strategy(model, strategy, label, G, tau, gamma, rho, tmax):
     return strategies
 
 
-def run_simulations(model, iterations, G, tau, gamma, rho, tmax, zoom):
+def run_simulations(model, states, iterations, G, tau, gamma, rho, tmax, zoom):
     simulations = []
+    model = model_simulations[model]
+
     for i in range(iterations):
-        if model == "sir":
-            t, S, I, R = EoN.fast_SIR(G, tau, gamma, rho=rho, tmax=tmax)
-        else:
-            t, S, I = EoN.fast_SIS(G, tau, gamma, rho=rho, tmax=tmax)
+        sim_object: Simulation_Investigation = model(G, tau, gamma, rho=rho, tmax=tmax, return_full_data=True)
+        t, D = sim_object.summary()
 
-        points = [[ti, Ii] for ti, Ii in zip(t.tolist(), I.tolist())]
-
-        if zoom:
-            points = simplify_coords(points, 0.05)
+        for key, values in D.items():
+            if key in states:
+                points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
             
-
-        simulations.extend([{"strategy": f"Simulation {i + 1}", "x": x, "y": y} for [x, y] in points])
+                if zoom:
+                    points = simplify_coords(points, 0.05)
+            
+                simulations.extend([{"strategy": f"Simulation {key} - {i + 1}", "x": x, "y": y} for [x, y] in points])
 
     return simulations
 
 
-def get_model_data(model: str, tau: float, gamma: float, rho: float, zoom: bool):
+def get_model_data(model: str, states: List[str], tau: float, gamma: float, rho: float, zoom: bool):
     N = 10**5 if model == "sir" else 10**4
     G = nx.barabasi_albert_graph(N, 5)  # create a Barabasi-Albert graph
 
@@ -60,7 +69,7 @@ def get_model_data(model: str, tau: float, gamma: float, rho: float, zoom: bool)
     data = []
 
     # Add simulations
-    simulations = run_simulations(model, iterations, G, tau, gamma, rho, tmax, zoom)
+    simulations = run_simulations(model, states, iterations, G, tau, gamma, rho, tmax, zoom)
     data.extend(simulations)
 
     # Add strategies
