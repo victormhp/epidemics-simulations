@@ -31,7 +31,7 @@ def run_strategy(model, strategy, label, G, tau, gamma, rho, tmax):
     return strategies
 
 
-def run_simulations(model, iterations, G, tau, gamma, rho, tmax):
+def run_simulations(model, iterations, G, tau, gamma, rho, tmax, zoom):
     simulations = []
     for i in range(iterations):
         if model == "sir":
@@ -40,14 +40,17 @@ def run_simulations(model, iterations, G, tau, gamma, rho, tmax):
             t, S, I = EoN.fast_SIS(G, tau, gamma, rho=rho, tmax=tmax)
 
         points = [[ti, Ii] for ti, Ii in zip(t.tolist(), I.tolist())]
-        simplified_data = simplify_coords(points, 0.05)
 
-        simulations.extend([{"strategy": f"Simulation {i + 1}", "x": x, "y": y} for [x, y] in simplified_data])
+        if zoom:
+            points = simplify_coords(points, 0.05)
+            
+
+        simulations.extend([{"strategy": f"Simulation {i + 1}", "x": x, "y": y} for [x, y] in points])
 
     return simulations
 
 
-def get_model_data(model: str, tau: float, gamma: float, rho: float):
+def get_model_data(model: str, tau: float, gamma: float, rho: float, zoom: bool):
     N = 10**5 if model == "sir" else 10**4
     G = nx.barabasi_albert_graph(N, 5)  # create a Barabasi-Albert graph
 
@@ -57,7 +60,7 @@ def get_model_data(model: str, tau: float, gamma: float, rho: float):
     data = []
 
     # Add simulations
-    simulations = run_simulations(model, iterations, G, tau, gamma, rho, tmax)
+    simulations = run_simulations(model, iterations, G, tau, gamma, rho, tmax, zoom)
     data.extend(simulations)
 
     # Add strategies
