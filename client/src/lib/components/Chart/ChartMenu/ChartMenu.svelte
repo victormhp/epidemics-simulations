@@ -7,9 +7,7 @@
 	const closeMenu = () => (open = false);
 </script>
 
-<div class="absolute top-0 -right-4">
-	<ChartActions {toggleMenu} />
-	{#if open}
-		<ChartDownload {closeMenu} />
-	{/if}
-</div>
+<ChartActions {toggleMenu} />
+{#if open}
+	<ChartDownload {closeMenu} />
+{/if}

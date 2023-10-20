@@ -1,17 +1,21 @@
 <script lang="ts">
 	import { ChartMenu } from './ChartMenu';
-	import type { Dimensions } from '$lib/models';
-	import { setChartConfig } from '$lib/stores';
+	import { chartDimensions, chartLines, chartScales, setLegend } from '$lib/stores';
+	import type { ChartLine, Dimensions } from '$lib/models';
 	import type { ScaleLinear } from 'd3';
 
+	export let dimensions: Dimensions;
 	export let xScale: ScaleLinear<number, number, never>;
 	export let yScale: ScaleLinear<number, number, never>;
-	export let dimensions: Dimensions;
+	export let lines: ChartLine[];
 	export let legends: string[];
 
 	const linesDisplayed = legends.reduce((map, key) => map.set(key, true), new Map());
 
-	setChartConfig({ dimensions, legends, xScale, yScale, linesDisplayed });
+	chartDimensions.set(dimensions);
+	chartLines.set({ lines, linesDisplayed });
+	chartScales.setDefault({ xScale, yScale });
+	setLegend(legends);
 </script>
 
 <div class="relative">
@@ -29,5 +33,7 @@
 			<slot />
 		</g>
 	</svg>
-	<ChartMenu />
+	<div class="absolute top-0 -right-4">
+		<ChartMenu />
+	</div>
 </div>

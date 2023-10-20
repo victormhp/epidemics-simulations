@@ -1,31 +1,26 @@
 <script lang="ts">
-	import { getChartConfig, updateChartConfig } from '$lib/stores';
+	import { chartDimensions, chartLines, getLegend } from '$lib/stores';
 	import type { ScaleOrdinal } from 'd3';
 
 	export let colors: ScaleOrdinal<string, string, never>;
 
 	let legendElements: SVGGElement[] = [];
-	const chartConfig = getChartConfig();
-	const legends = $chartConfig.legends;
 
-	const getFillColor = (legend: string) => {
-		if (legend.startsWith('Simulation')) {
+	const legend = getLegend();
+	const getFillColor = (model: string) => {
+		if (model.startsWith('Simulation')) {
 			return 'gray';
 		}
-		return colors(legend);
+		return colors(model);
 	};
 
-	$: dimensions = $chartConfig.dimensions;
-
-	$: linesDisplayed = $chartConfig.linesDisplayed;
-
-	$: getFillOpacity = (legend: string) => (linesDisplayed.get(legend) ? 1 : 0.4);
+	$: getFillOpacity = (model: string) => ($chartLines.linesDisplayed.get(model) ? 1 : 0.4);
 
 	function calculateLegendPosition(index: number, width: number) {
 		if (index % 2 === 0) {
-			return `translate(${index * (width / legends.length)}, 10)`;
+			return `translate(${index * (width / legend.length)}, 10)`;
 		}
-		return `translate(${(index - 1) * (width / legends.length)}, 40)`;
+		return `translate(${(index - 1) * (width / legend.length)}, 40)`;
 	}
 
 	function toggleVisibility(event: MouseEvent) {
@@ -33,28 +28,35 @@
 		const { name } = legendElement.dataset;
 
 		if (name) {
-			linesDisplayed.set(name, !linesDisplayed.get(name));
-			updateChartConfig(chartConfig, { linesDisplayed });
+			const linesDisplayed = $chartLines.linesDisplayed;
+			linesDisplayed.set(name, !$chartLines.linesDisplayed.get(name));
+
+			chartLines.update((lines) => {
+				return {
+					...lines,
+					linesDisplayed
+				};
+			});
 		}
 	}
 </script>
 
-<g transform="translate(0,{dimensions.height + dimensions.marginBottom / 2})">
-	{#each legends as legend, i}
+<g transform="translate(0,{$chartDimensions.height + $chartDimensions.marginBottom / 2})">
+	{#each legend as model, i}
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<g
 			bind:this={legendElements[i]}
-			data-name={legend}
+			data-name={model}
 			class="legend outline-ring outline-offset-4 cursor-pointer select-none"
-			transform={calculateLegendPosition(i, dimensions.width)}
+			transform={calculateLegendPosition(i, $chartDimensions.width)}
 			role="button"
 			tabindex="0"
-			fill-opacity={getFillOpacity(legend)}
+			fill-opacity={getFillOpacity(model)}
 			on:click={toggleVisibility}
 		>
-			<rect width="16" height="16" rx="2" ry="2" fill={getFillColor(legend)} />
+			<rect width="16" height="16" rx="2" ry="2" fill={getFillColor(model)} />
 			<text x="20" y="12" style="font-family: sans-serif; font-size: 12px; fill: #777;">
-				{legend}
+				{model}
 			</text>
 		</g>
 	{/each}

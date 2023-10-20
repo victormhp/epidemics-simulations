@@ -54,7 +54,7 @@
 </script>
 
 {#key dimensions}
-	<Chart {xScale} {yScale} legends={chartLegends} {dimensions}>
+	<Chart {xScale} {yScale} lines={chartLines} legends={chartLegends} {dimensions}>
 		<Zoomable>
 			<ClipPath id="clip" />
 			<Axis />
