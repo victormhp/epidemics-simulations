@@ -1,5 +1,10 @@
 import type { ChartInputs } from '$lib/models';
-import { formJsonToYaml } from './form';
+
+function formJsonToYaml(data: ChartInputs): string {
+	return Object.entries(data)
+		.map(([key, value]) => `${key}: ${value}`)
+		.join('\n');
+}
 
 export const downloadChartPNG = (svgSelector: string) => {
 	const svg = document.querySelector<SVGElement>(svgSelector);
