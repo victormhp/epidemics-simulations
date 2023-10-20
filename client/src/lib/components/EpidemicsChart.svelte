@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ClipPath, Axis, Zoomable, Legend, Labels, Lines, Chart } from '$lib/components/Chart';
 	import { chartResponse } from '$lib/stores';
+	import { matchSimulation } from '$lib/utils';
 	import * as d3 from 'd3';
 
 	export let width: number;
@@ -11,10 +12,10 @@
 
 	const legends = chartLines.map((line) => line[0]);
 	const chartLegends = legends.reduce((result, item) => {
-		const match = item.match(/Simulation ([A-Z]) - (\d+)/);
+		const match = matchSimulation(item);
 
 		if (match) {
-			const [, state, iteration] = match;
+			const [, state] = match;
 
 			if (!result.includes(`Simulation ${state}`)) {
 				result.push(`Simulation ${state}`);

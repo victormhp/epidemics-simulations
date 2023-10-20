@@ -34,7 +34,14 @@
 	const zoomIn = () => zoom.scaleBy(graph.transition(), 2);
 	const zoomOut = () => zoom.scaleBy(graph.transition(), 0.5);
 
-	chartActions.set({ resetAxis, zoomIn, zoomOut });
+	chartActions.update((actions) => {
+		return {
+			...actions,
+			resetAxis,
+			zoomIn,
+			zoomOut
+		};
+	});
 
 	$: graph = d3.select<SVGGElement, unknown>(graphElement);
 	$: graph.call(zoom);

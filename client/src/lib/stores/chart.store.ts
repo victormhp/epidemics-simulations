@@ -1,7 +1,8 @@
-import { writable, type Updater } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { getContext, setContext } from 'svelte';
 import type { ChartData, ChartInputs, ChartResponse, Dimensions } from '$lib/models';
-import type { ScaleLinear, ZoomTransform } from 'd3';
+import { updater } from '$lib/utils';
+import * as d3 from 'd3';
 
 // Chart fetch response
 const initialChartResponse: ChartResponse = {
@@ -32,20 +33,10 @@ interface ChartLines {
 	linesDisplayed: Map<string, boolean>;
 }
 
-function createLinesStore(initialScales: ChartLines, onChange?: (value: ChartLines) => void) {
-	const lines = writable(initialScales);
+function createLinesStore(initialValue: ChartLines, onChange?: (value: ChartLines) => void) {
+	const lines = writable(initialValue);
 
-	const update = (updater: Updater<ChartLines>) => {
-		lines.update((current) => {
-			const newLines = updater(current);
-
-			if (newLines !== current) {
-				onChange?.(newLines);
-			}
-
-			return newLines;
-		});
-	};
+	const update = updater(lines, onChange);
 
 	return {
 		...lines,
@@ -57,32 +48,22 @@ export const chartLines = createLinesStore({} as ChartLines);
 
 // Chart scales
 interface ChartScales {
-	xScale: ScaleLinear<number, number, never>;
-	yScale: ScaleLinear<number, number, never>;
+	xScale: d3.ScaleLinear<number, number, never>;
+	yScale: d3.ScaleLinear<number, number, never>;
 }
 
-function createScalesStore(initialScales: ChartScales, onChange?: (value: ChartScales) => void) {
-	const scales = writable(initialScales);
-	let defaultScales = initialScales;
+function createScalesStore(initialValue: ChartScales, onChange?: (value: ChartScales) => void) {
+	const scales = writable(initialValue);
+	let defaultScales = initialValue;
 
-	const update = (updater: Updater<ChartScales>) => {
-		scales.update((current) => {
-			const newScales = updater(current);
-
-			if (newScales !== current) {
-				onChange?.(newScales);
-			}
-
-			return newScales;
-		});
-	};
+	const update = updater(scales, onChange);
 
 	const setDefault: typeof scales.set = (curr) => {
 		update(() => curr);
 		defaultScales = curr;
 	};
 
-	const rescale = (zoomState: ZoomTransform) => {
+	const rescale = (zoomState: d3.ZoomTransform) => {
 		update(() => {
 			return {
 				xScale: zoomState.rescaleX(defaultScales.xScale),
@@ -91,11 +72,21 @@ function createScalesStore(initialScales: ChartScales, onChange?: (value: ChartS
 		});
 	};
 
+	const updateDomain = (data: ChartData[]) => {
+		update(() => {
+			return {
+				xScale: defaultScales.xScale.domain([0, d3.max(data, (d) => d.x) ?? 0]),
+				yScale: defaultScales.yScale.domain([0, d3.max(data, (d) => d.y) ?? 0])
+			};
+		});
+	};
+
 	return {
 		...scales,
+		setDefault,
 		rescale,
-		update,
-		setDefault
+		updateDomain,
+		update
 	};
 }
 
@@ -106,6 +97,18 @@ interface ChartActions {
 	zoomIn: () => void;
 	zoomOut: () => void;
 	resetAxis: () => void;
+	updateDomain: () => void;
 }
 
-export const chartActions = writable<ChartActions>();
+function createActionsStore(initialValue: ChartActions, onChange?: (value: ChartActions) => void) {
+	const actions = writable(initialValue);
+
+	const update = updater(actions, onChange);
+
+	return {
+		...actions,
+		update
+	};
+}
+
+export const chartActions = createActionsStore({} as ChartActions);
