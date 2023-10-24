@@ -41,6 +41,9 @@
 	* {
 		@apply border-border;
 	}
+	*:focus-visible {
+		@apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+	}
 	body {
 		@apply bg-background text-foreground;
 	}
@@ -72,4 +75,8 @@ picture,
 svg {
 	max-width: 100%;
 	display: inherit;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	display: none;
 }

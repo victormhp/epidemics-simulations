@@ -1,22 +1,28 @@
 <script lang="ts">
-	import { ChartForm, ChartFormFile, EpidemicsChart, Tabs, TabItem } from '$lib/components';
+	import { ChartForm, ChartFormFile, EpidemicsChart } from '$lib/components';
+	import { Tab, TabGroup } from '$lib/components/ui/Tabs';
 	import { chartResponse } from '$lib/stores';
 	import { Loader2 } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
 
 	let containerWidth: number;
 	let containerHeight: number;
+
+	let tabSet: number = 0;
 </script>
 
 <section class="space-y-8">
-	<Tabs>
-		<TabItem id="1" title="Upload data">
-			<ChartForm />
-		</TabItem>
-		<TabItem id="2" title="Upload files">
-			<ChartFormFile />
-		</TabItem>
-	</Tabs>
+	<TabGroup>
+		<Tab bind:group={tabSet} name="tab1" value={0}>Upload data</Tab>
+		<Tab bind:group={tabSet} name="tab2" value={1}>Upload Files</Tab>
+		<svelte:fragment slot="panel">
+			{#if tabSet === 0}
+				<ChartForm />
+			{:else if tabSet === 1}
+				<ChartFormFile />
+			{/if}
+		</svelte:fragment>
+	</TabGroup>
 </section>
 <section
 	bind:clientWidth={containerWidth}
