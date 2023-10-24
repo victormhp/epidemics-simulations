@@ -31,7 +31,7 @@
 	const margines = {
 		marginTop: 30,
 		marginRight: 40,
-		marginBottom: 125,
+		marginBottom: 150,
 		marginLeft: 90
 	};
 

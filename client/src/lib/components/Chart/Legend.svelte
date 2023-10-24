@@ -16,11 +16,16 @@
 
 	$: getFillOpacity = (model: string) => ($chartLines.linesDisplayed.get(model) ? 1 : 0.4);
 
-	function calculateLegendPosition(index: number, width: number) {
-		if (index % 2 === 0) {
-			return `translate(${index * (width / legend.length)}, 10)`;
-		}
-		return `translate(${(index - 1) * (width / legend.length)}, 40)`;
+	function calculateLegendPosition(index: number, containerWidth: number, elementWidth: number) {
+		const maxElementsPerRow = Math.max(1, Math.floor(containerWidth / elementWidth));
+
+		const row = Math.floor(index / maxElementsPerRow);
+		const col = index % maxElementsPerRow;
+
+		const x = col * elementWidth;
+		const y = row * 20;
+
+		return `translate(${x},${y})`;
 	}
 
 	function toggleVisibility(event: MouseEvent) {
@@ -48,7 +53,7 @@
 			bind:this={legendElements[i]}
 			data-name={model}
 			class="legend outline-ring outline-offset-4 cursor-pointer select-none"
-			transform={calculateLegendPosition(i, $chartDimensions.width)}
+			transform={calculateLegendPosition(i, $chartDimensions.width, 200)}
 			role="button"
 			tabindex="0"
 			fill-opacity={getFillOpacity(model)}
