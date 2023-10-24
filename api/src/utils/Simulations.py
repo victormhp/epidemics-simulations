@@ -21,7 +21,6 @@ model_strategies = {
 model_simulations = {
     "sir": EoN.fast_SIR,
     "sis": EoN.fast_SIS,
-    "nonMarkovSir": EoN.fast_nonMarkov_SIR
 }
 
 
