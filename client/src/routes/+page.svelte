@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { ChartForm, ChartFormFile, EpidemicsChart } from '$lib/components';
-	import { Tab, TabGroup } from '$lib/components/ui/Tabs';
+	import { ChartForm, ChartFormYaml, ChartFormSim, EpidemicsChart } from '$lib/components';
+	import { Tab, TabGroup } from '$lib/components/ui';
 	import { chartResponse } from '$lib/stores';
 	import { Loader2 } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
@@ -14,12 +14,15 @@
 <section class="space-y-8">
 	<TabGroup>
 		<Tab bind:group={tabSet} name="tab1" value={0}>Upload data</Tab>
-		<Tab bind:group={tabSet} name="tab2" value={1}>Upload Files</Tab>
+		<Tab bind:group={tabSet} name="tab2" value={1}>Upload YAML</Tab>
+		<Tab bind:group={tabSet} name="tab2" value={2}>Upload SIM</Tab>
 		<svelte:fragment slot="panel">
 			{#if tabSet === 0}
 				<ChartForm />
 			{:else if tabSet === 1}
-				<ChartFormFile />
+				<ChartFormYaml />
+			{:else if tabSet === 2}
+				<ChartFormSim />
 			{/if}
 		</svelte:fragment>
 	</TabGroup>
