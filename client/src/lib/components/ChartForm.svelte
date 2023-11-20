@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ChartResponse } from '$lib/models';
 	import { chartResponse } from '$lib/stores';
+	import { generateChartFromData } from '$lib/utils';
 	import { InputZoom } from './ui';
 
 	const simulations = {
@@ -11,41 +11,8 @@
 	const simulationStates = ['S', 'I', 'R'];
 
 	async function generateChart(event: SubmitEvent) {
-		const formData = new FormData(event.target as HTMLFormElement);
-
-		// Simulation states
-		const states = formData.getAll('state');
-		formData.delete('state');
-
-		const data = Object.fromEntries(formData.entries());
-
-		const dataJson = {
-			...data,
-			states
-		};
-
-		try {
-			chartResponse.update((state) => ({ ...state, loading: true }));
-			const response = await fetch('http://localhost:5000/api/models/', {
-				method: 'POST',
-				body: JSON.stringify(dataJson),
-				headers: { 'Content-type': 'application/json' }
-			});
-
-			if (response.ok) {
-				const data: ChartResponse = await response.json();
-
-				chartResponse.update((state) => ({
-					...state,
-					inputs: data.inputs,
-					positions: data.positions
-				}));
-			}
-		} catch (error) {
-			console.error(error);
-		} finally {
-			chartResponse.update((state) => ({ ...state, loading: false }));
-		}
+		const url = 'http://localhost:5000/api/models/';
+		await generateChartFromData(event, url);
 	}
 </script>
 
