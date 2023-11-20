@@ -9,6 +9,7 @@ main = Blueprint("yaml_blueprint", __name__)
 def generate_chart_from_yaml():
     if request.method == "POST":
         uploaded_file = request.files.get("file")
+        zoom = True if request.form.get("zoom") else False
 
         if uploaded_file:
             file_content = uploaded_file.read()
@@ -23,7 +24,7 @@ def generate_chart_from_yaml():
                     tau = float(data["transmissionRate"])
                     gamma = float(data["recoveryRate"])
                     rho = float(data["fractionInfected"])
-                    zoom = True if "zoom" in data else False
+                    data["zoom"] = zoom
 
                     model_data = get_model_data(model, states, tau, gamma, rho, zoom)
 

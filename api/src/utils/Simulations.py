@@ -79,13 +79,15 @@ def get_model_data(model: str, states: List[str], tau: float, gamma: float, rho:
     return data
 
 
-def get_model_data_from_sim(t, D):
+def get_model_data_from_sim(t, D, zoom):
     data = []
 
     for key, values in D.items():
         points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
-        simplified_data = simplify_coords(points, 0.05)
 
-        data.extend([{"strategy": f"Simulation: {key}", "x": x, "y": y} for [x, y] in simplified_data])
+        if zoom:
+            points = simplify_coords(points, 0.05)
+
+        data.extend([{"strategy": f"Simulation: {key}", "x": x, "y": y} for [x, y] in points])
 
     return data

@@ -10,14 +10,15 @@ main = Blueprint("sim_blueprint", __name__)
 def generate_chart_from_sim():
     if request.method == "POST":
         uploaded_file = request.files.get("file")
+        zoom = True if request.form.get("zoom") else False
 
         try:
             sim: Simulation_Investigation = dill.load(uploaded_file)
             if sim is not None:
                 t, D = sim.summary()
 
-                model_data = get_model_data_from_sim(t, D)
-                response = jsonify({"positions": model_data})
+                model_data = get_model_data_from_sim(t, D, zoom)
+                response = jsonify({"inputs": {"zoom": zoom}, "positions": model_data})
                 return response
             else:
                 return jsonify({"error": "Invalid Simulation object file"})
