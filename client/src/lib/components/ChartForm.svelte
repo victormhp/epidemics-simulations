@@ -52,7 +52,7 @@
 		<input id="recovery" name="recoveryRate" type="number" min="0" step="0.001" required />
 	</div>
 	<div>
-		<label for="infected">Transmission Rate</label>
+		<label for="infected">Fraction initially infected</label>
 		<input id="infected" name="fractionInfected" type="number" min="0" step="any" required />
 	</div>
 	<InputZoom />
