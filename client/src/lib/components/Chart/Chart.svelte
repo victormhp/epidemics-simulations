@@ -33,7 +33,7 @@
 			<slot />
 		</g>
 	</svg>
-	<div class="absolute top-0 -right-4">
+	<div class="w-full absolute top-0 left-0 mb-4 sm:w-auto sm:left-auto sm:-right-4">
 		<ChartMenu />
 	</div>
 </div>

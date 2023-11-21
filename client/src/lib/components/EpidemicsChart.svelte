@@ -32,7 +32,7 @@
 		marginTop: 30,
 		marginRight: 40,
 		marginBottom: 150,
-		marginLeft: 90
+		marginLeft: 80
 	};
 
 	$: dimensions = {

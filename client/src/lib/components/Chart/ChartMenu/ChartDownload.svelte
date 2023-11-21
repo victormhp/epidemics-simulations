@@ -8,7 +8,7 @@
 </script>
 
 <div
-	class="w-[200px] absolute top-8 translate-x-[-90%] rounded-lg bg-background border border-border overflow-hidden p-1 shadow-md"
+	class="w-[200px] absolute top-8 translate-y-[15%] rounded-lg bg-background border border-border overflow-hidden p-1 shadow-md sm:translate-x-[-90%]"
 	role="menu"
 	tabindex="0"
 	use:clickOutside

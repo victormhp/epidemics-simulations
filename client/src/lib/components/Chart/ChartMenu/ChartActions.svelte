@@ -8,7 +8,7 @@
 	const isZoomEnable = $chartResponse.inputs.zoom;
 </script>
 
-<div class=" flex flex-col justify-center gap-y-2">
+<div class="flex gap-y-2 sm:flex-col lg:justify-center">
 	<button class="btn-icon" on:click={toggleMenu}>
 		<MoreVertical color="#71717a" size="20" />
 	</button>

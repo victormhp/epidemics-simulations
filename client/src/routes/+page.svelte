@@ -30,7 +30,7 @@
 <section
 	bind:clientWidth={containerWidth}
 	bind:clientHeight={containerHeight}
-	class="h-[600px] flex justify-center items-center grow px-4 py-8 rounded-lg border border-border shadow lg:h-full"
+	class="h-[600px] flex justify-center items-center grow rounded-lg border border-border shadow sm:px-4 sm:py-8 lg:h-full"
 >
 	{#if $chartResponse.loading}
 		<div in:fade>
