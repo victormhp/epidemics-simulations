@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { ChartMenu } from './ChartMenu';
 	import { chartDimensions, chartLines, chartScales, setLegend } from '$lib/stores';
-	import type { ChartLine, Dimensions } from '$lib/models';
+	import type { Line, Dimensions } from '$lib/models';
 	import type { ScaleLinear } from 'd3';
 
 	export let dimensions: Dimensions;
 	export let xScale: ScaleLinear<number, number, never>;
 	export let yScale: ScaleLinear<number, number, never>;
-	export let lines: ChartLine[];
+	export let lines: Line[];
 	export let legends: string[];
 
 	const linesDisplayed = legends.reduce((map, key) => map.set(key, true), new Map());

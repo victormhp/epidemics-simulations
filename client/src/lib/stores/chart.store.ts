@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { getContext, setContext } from 'svelte';
-import type { ChartData, ChartInputs, ChartResponse, Dimensions } from '$lib/models';
+import type { ChartData, ChartLines, ChartInputs, ChartResponse, Dimensions } from '$lib/models';
 import { updater } from '$lib/utils';
 import * as d3 from 'd3';
 
@@ -26,13 +26,6 @@ export function getLegend() {
 }
 
 // Chart Lines
-type Line = [string, ChartData[]];
-
-interface ChartLines {
-	lines: Line[];
-	linesDisplayed: Map<string, boolean>;
-}
-
 function createLinesStore(initialValue: ChartLines, onChange?: (value: ChartLines) => void) {
 	const lines = writable(initialValue);
 

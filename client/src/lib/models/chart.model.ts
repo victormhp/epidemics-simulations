@@ -21,6 +21,13 @@ export interface ChartData {
 	y: number;
 }
 
+export type Line = [string, ChartData[]];
+
+export interface ChartLines {
+	lines: Line[];
+	linesDisplayed: Map<string, boolean>;
+}
+
 export interface ChartResponse {
 	loading: boolean;
 	positions: ChartData[];
