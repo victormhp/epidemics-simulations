@@ -9,8 +9,8 @@ main = Blueprint("sim_blueprint", __name__)
 @main.route("/", methods=["POST"])
 def generate_chart_from_sim():
     if request.method == "POST":
-        uploaded_file = request.files.get("file")
-        zoom = True if request.form.get("zoom") else False
+        uploaded_file = request.files["file"]
+        zoom = True if "zoom" in request.form else False
 
         try:
             sim: Simulation_Investigation = dill.load(uploaded_file)

@@ -1,6 +1,6 @@
+import yaml
 from flask import Blueprint, request, jsonify
 from src.utils.Simulations import get_model_data
-import yaml
 
 main = Blueprint("yaml_blueprint", __name__)
 
@@ -8,11 +8,11 @@ main = Blueprint("yaml_blueprint", __name__)
 @main.route("/", methods=["POST"])
 def generate_chart_from_yaml():
     if request.method == "POST":
-        uploaded_file = request.files.get("file")
-        zoom = True if request.form.get("zoom") else False
+        yaml_file = request.files["yaml"]
+        zoom = True if "zoom" in request.form else False
 
-        if uploaded_file:
-            file_content = uploaded_file.read()
+        if yaml_file:
+            file_content = yaml_file.read()
 
             try:
                 data = yaml.safe_load(file_content)

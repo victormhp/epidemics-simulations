@@ -8,11 +8,11 @@ main = Blueprint("chart_blueprint", __name__)
 def generate_chart():
     if request.method == "POST":
         try:
-            data = request.get_json()
+            data = request.form
 
             # Get and parse data
             model = data["model"]
-            states = data["states"]
+            states = list(data["states"])
             tau = float(data["transmissionRate"])
             gamma = float(data["recoveryRate"])
             rho = float(data["fractionInfected"])
