@@ -2,7 +2,10 @@ import EoN
 import networkx as nx
 from EoN import Simulation_Investigation
 from simplification.cutil import simplify_coords
-from typing import List
+from typing import Type, List
+
+GraphType = Type[nx.Graph]
+
 
 model_strategies = {
     "sir": {
@@ -24,7 +27,7 @@ model_simulations = {
 }
 
 
-def run_strategy(model, strategy, label, G, tau, gamma, rho, tmax):
+def run_strategy(model: str, strategy: str, label: str, G: GraphType, tau: float, gamma: float, rho: float, tmax: float):
     strategies = []
 
     if model == "sir":
@@ -38,7 +41,7 @@ def run_strategy(model, strategy, label, G, tau, gamma, rho, tmax):
     return strategies
 
 
-def run_simulations(model, states, iterations, G, tau, gamma, rho, tmax, zoom):
+def run_simulations(model: str, states: List[str], iterations: int, G: GraphType, tau: float, gamma: float, rho: float, tmax: float, zoom: bool):
     simulations = []
     model = model_simulations[model]
 
@@ -59,8 +62,8 @@ def run_simulations(model, states, iterations, G, tau, gamma, rho, tmax, zoom):
 
 
 def get_model_data(model: str, states: List[str], tau: float, gamma: float, rho: float, zoom: bool):
-    N = 10**5 if model == "sir" else 10**4
-    G = nx.barabasi_albert_graph(N, 5)  # create a Barabasi-Albert graph
+    N = 10**4
+    G = nx.barabasi_albert_graph(N, 5)
 
     tmax = 20
     iterations = 5  # run 5 simulations
@@ -79,7 +82,7 @@ def get_model_data(model: str, states: List[str], tau: float, gamma: float, rho:
     return data
 
 
-def get_model_data_from_sim(t, D, zoom):
+def get_model_data_from_sim(t, D, zoom: bool):
     data = []
 
     for key, values in D.items():
