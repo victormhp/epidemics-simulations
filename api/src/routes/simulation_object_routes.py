@@ -1,7 +1,7 @@
+import dill
 from flask import Blueprint, request, jsonify
 from EoN.simulation_investigation import Simulation_Investigation
-from src.utils.Simulations import get_model_data_from_sim
-import dill
+from src.utils.generate_charts import get_model_data_from_sim
 
 main = Blueprint("sim_blueprint", __name__)
 
@@ -9,7 +9,7 @@ main = Blueprint("sim_blueprint", __name__)
 @main.route("/", methods=["POST"])
 def generate_chart_from_sim():
     if request.method == "POST":
-        uploaded_file = request.files["file"]
+        uploaded_file = request.files["simulation_object"]
         zoom = True if "zoom" in request.form else False
 
         try:

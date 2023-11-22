@@ -14,7 +14,7 @@
 	const simulationStates = ['S', 'I', 'R'];
 
 	async function generateChart(event: SubmitEvent) {
-		const url = 'http://localhost:5000/api/models';
+		const url = 'http://localhost:5000/api/form';
 		const uploadedFiles: UploadedFile[] = [{ fileList: graphmlFile, fieldName: 'graphml' }];
 
 		const addStates = (formData: FormData) => {

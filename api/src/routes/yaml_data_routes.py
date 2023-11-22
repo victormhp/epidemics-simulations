@@ -1,6 +1,6 @@
 import yaml
 from flask import Blueprint, request, jsonify
-from src.utils.Simulations import get_model_data
+from src.utils.generate_charts import get_model_data
 
 main = Blueprint("yaml_blueprint", __name__)
 

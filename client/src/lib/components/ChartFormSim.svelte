@@ -10,7 +10,7 @@
 		const uploadedFiles: UploadedFile[] = [
 			{
 				fileList: simulationObjectFile,
-				fieldName: 'sim'
+				fieldName: 'simulation_object'
 			}
 		];
 
