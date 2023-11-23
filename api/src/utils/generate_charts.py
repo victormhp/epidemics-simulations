@@ -51,7 +51,7 @@ def get_model_data_from_sim(t: NDArray, D: dict[Any, list[int]], zoom: bool) -> 
     data = []
 
     for key, values in D.items():
-        points = [[ti, ki] for ti, ki in zip(t.tolist(), values)]
+        points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
 
         if zoom:
             points = simplify_coords(points, 0.05)
@@ -83,7 +83,7 @@ def run_simulations(
 
             for key, values in D.items():
                 if key in states:
-                    points = [[ti, ki] for ti, ki in zip(t.tolist(), values)]
+                    points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
 
                     if zoom:
                         points = simplify_coords(points, 0.05)

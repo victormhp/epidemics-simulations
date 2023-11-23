@@ -26,11 +26,11 @@ def generate_chart():
             tau = float(data["transmissionRate"])
             gamma = float(data["recoveryRate"])
             rho = float(data["fractionInfected"])
-            zoom = True if "zoom" in data else False
+            zoom = bool(data.get("zoom", False))
 
             model_data = get_model_data(G, model, states, tau, gamma, rho, zoom)
 
-            response = jsonify({"inputs": data, "positions": model_data})
+            response = jsonify({"positions": model_data})
             return response
         except:
             response = jsonify({"error": "Invalid JSON data"}), 400

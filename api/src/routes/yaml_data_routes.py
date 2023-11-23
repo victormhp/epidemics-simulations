@@ -10,7 +10,8 @@ main = Blueprint("yaml_blueprint", __name__)
 def generate_chart_from_yaml():
     if request.method == "POST":
         files = request.files
-        zoom = True if "zoom" in request.form else False
+        form = request.form
+        zoom = bool(form.get("zoom", False))
 
         # Default network, in case no graphml file is provided
         N = 10**5
@@ -34,7 +35,6 @@ def generate_chart_from_yaml():
                     tau = float(data["transmissionRate"])
                     gamma = float(data["recoveryRate"])
                     rho = float(data["fractionInfected"])
-                    data["zoom"] = zoom
 
                     model_data = get_model_data(G, model, states, tau, gamma, rho, zoom)
 
