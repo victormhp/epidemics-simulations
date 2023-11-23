@@ -13,9 +13,9 @@
 
 <section class="space-y-8">
 	<TabGroup>
-		<Tab bind:group={tabSet} name="tab1" value={0}>Upload data</Tab>
-		<Tab bind:group={tabSet} name="tab2" value={1}>Upload YAML</Tab>
-		<Tab bind:group={tabSet} name="tab2" value={2}>Upload SIM</Tab>
+		<Tab bind:group={tabSet} name="tab1" value={0}>Form Data</Tab>
+		<Tab bind:group={tabSet} name="tab2" value={1}>YAML</Tab>
+		<Tab bind:group={tabSet} name="tab2" value={2}>Simulation Investigation</Tab>
 		<svelte:fragment slot="panel">
 			{#if tabSet === 0}
 				<ChartForm />

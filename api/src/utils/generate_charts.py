@@ -61,10 +61,7 @@ def run_simulations(model: str, states: List[str], iterations: int, G: GraphType
     return simulations
 
 
-def get_model_data(model: str, states: List[str], tau: float, gamma: float, rho: float, zoom: bool):
-    N = 10**4
-    G = nx.barabasi_albert_graph(N, 5)
-
+def get_model_data(G: GraphType, model: str, states: List[str], tau: float, gamma: float, rho: float, zoom: bool):
     tmax = 20
     iterations = 5  # run 5 simulations
 

@@ -29,7 +29,9 @@
 
 <form class="flex flex-col justify-center gap-y-8" on:submit|preventDefault={generateChart}>
 	<div>
-		<input id="graphml" name="graphml" type="file" accept={'.graphml'} required />
+		<label for="graphml">Upload File</label>
+		<input id="graphml" name="graphml" type="file" accept={'.graphml'} />
+		<p class="mt-1 ml-1 text-xs text-primary/50 select-none">GraphML to define your network.</p>
 	</div>
 	<div>
 		<label for="model">Model</label>

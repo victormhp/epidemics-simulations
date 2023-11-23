@@ -3,6 +3,7 @@
 	import { Upload } from 'lucide-svelte';
 
 	export let id: string;
+	export let required = false;
 	export let allowedExtensions: string = '*';
 	export let files: FileList | undefined = undefined;
 </script>
@@ -34,7 +35,7 @@
 				name="fileChart"
 				type="file"
 				accept={allowedExtensions}
-				required
+				{required}
 			/>
 		</div>
 	</label>

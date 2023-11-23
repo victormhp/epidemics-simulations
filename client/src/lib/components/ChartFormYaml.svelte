@@ -21,7 +21,7 @@
 	<FileDropzone id="graphmlInputs" bind:files={graphmlFile} allowedExtensions={'.graphml'}>
 		<span slot="files">GraphML file</span>
 	</FileDropzone>
-	<FileDropzone id="yamlInput" bind:files={yamlFile} allowedExtensions={'.yaml'}>
+	<FileDropzone id="yamlInput" bind:files={yamlFile} allowedExtensions={'.yaml'} required={true}>
 		<span slot="files">YAML file</span>
 	</FileDropzone>
 	<InputZoom />

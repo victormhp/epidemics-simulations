@@ -56,7 +56,7 @@
 </script>
 
 <label
-	class="text-center cursor-pointer transition-colors duration-100 flex-1 px-4 py-2 rounded-t-lg {classesActive}"
+	class="flex justify-center items-center text-center cursor-pointer transition-colors duration-100 flex-1 px-4 py-2 rounded-t-lg {classesActive}"
 	{title}
 >
 	<div
@@ -84,9 +84,6 @@
 			/>
 		</div>
 		<div class="tab-interface">
-			{#if $$slots.lead}
-				<div class="tab-lead"><slot name="lead" /></div>
-			{/if}
 			<div class="tab-label"><slot /></div>
 		</div>
 	</div>

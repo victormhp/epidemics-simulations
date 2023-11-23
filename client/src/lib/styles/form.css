@@ -1,11 +1,18 @@
-input[type='text'],
-input[type='number'] {
-	@apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground;
+input {
+	@apply flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground;
 }
 
 input[type='checkbox'],
 input[type='radio'] {
 	@apply accent-primary outline-ring;
+}
+
+input[type='file'] {
+	@apply cursor-pointer;
+}
+
+input[type='file']::file-selector-button {
+	@apply bg-foreground text-background border-0 rounded-sm mr-3 py-1 px-2 cursor-pointer;
 }
 
 label {

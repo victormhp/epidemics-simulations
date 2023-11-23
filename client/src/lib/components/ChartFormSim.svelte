@@ -23,8 +23,8 @@
 	enctype="multipart/form-data"
 	on:submit|preventDefault={generateChartFromSimulationObject}
 >
-	<FileDropzone id="simInputs" bind:files={simulationObjectFile}>
-		<span slot="files">Simulation Object file</span>
+	<FileDropzone id="simInputs" bind:files={simulationObjectFile} required={true}>
+		<span slot="files">Simulation Investigation Object file</span>
 	</FileDropzone>
 	<InputZoom />
 	<button disabled={$chartResponse.loading} type="submit" class="btn">Generate</button>
