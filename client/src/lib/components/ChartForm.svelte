@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { chartResponse } from '$lib/stores';
 	import { generateChartFromData } from '$lib/utils';
-	import type { UploadedFile } from '$lib/utils';
 	import { InputZoom } from './ui';
-
-	let graphmlFile: FileList;
 
 	const simulations = {
 		sir: 'Fast SIR',
@@ -15,7 +12,6 @@
 
 	async function generateChart(event: SubmitEvent) {
 		const url = 'http://localhost:5000/api/form';
-		const uploadedFiles: UploadedFile[] = [{ fileList: graphmlFile, fieldName: 'graphml' }];
 
 		const addStates = (formData: FormData) => {
 			const states = formData.getAll('state');
@@ -23,7 +19,7 @@
 			formData.append('states', states.join(''));
 		};
 
-		await generateChartFromData(event, url, uploadedFiles, addStates);
+		await generateChartFromData(event, url, addStates);
 	}
 </script>
 

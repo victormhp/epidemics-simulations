@@ -3,8 +3,9 @@
 	import { Upload } from 'lucide-svelte';
 
 	export let id: string;
+	export let name: string;
 	export let required = false;
-	export let allowedExtensions: string = '*';
+	export let allowedExtensions = '*';
 	export let files: FileList | undefined = undefined;
 </script>
 
@@ -32,7 +33,7 @@
 			<input
 				bind:files
 				id="dropzone-{id}"
-				name="fileChart"
+				{name}
 				type="file"
 				accept={allowedExtensions}
 				{required}

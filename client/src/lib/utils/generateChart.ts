@@ -1,21 +1,9 @@
 import type { ChartResponse } from '$lib/models';
 import { chartResponse } from '$lib/stores';
 
-export interface UploadedFile {
-	fileList: FileList;
-	fieldName: string;
-}
-
-function appendFile(formData: FormData, file: UploadedFile) {
-	if (file.fileList?.[0]) {
-		formData.append(file.fieldName, file.fileList[0]);
-	}
-}
-
 export async function generateChartFromData(
 	event: SubmitEvent,
 	url: string,
-	files?: UploadedFile[],
 	modifyFormData?: (formData: FormData) => void
 ) {
 	const formData = new FormData(event.target as HTMLFormElement);
@@ -24,13 +12,8 @@ export async function generateChartFromData(
 		modifyFormData(formData);
 	}
 
-	if (files) {
-		for (const file of files) {
-			if (file.fileList) {
-				appendFile(formData, file);
-			}
-		}
-	}
+	const chartData = Object.fromEntries([...formData]);
+	console.log(chartData);
 
 	try {
 		chartResponse.update((state) => ({ ...state, loading: true }));
@@ -41,11 +24,10 @@ export async function generateChartFromData(
 
 		if (response.ok) {
 			const data: ChartResponse = await response.json();
-			console.log(data);
 
 			chartResponse.update((state) => ({
 				...state,
-				inputs: data.inputs,
+				inputs: chartData,
 				positions: data.positions
 			}));
 		} else {

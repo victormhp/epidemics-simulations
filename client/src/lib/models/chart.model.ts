@@ -8,12 +8,7 @@ export interface Dimensions {
 }
 
 export interface ChartInputs {
-	model: string;
-	states: string[];
-	transmissionRate: string;
-	recoveryRate: string;
-	fractionInfected: string;
-	zoom?: string;
+	[k: string]: FormDataEntryValue;
 }
 
 export interface ChartData {
