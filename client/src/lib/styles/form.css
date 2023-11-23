@@ -8,11 +8,11 @@ input[type='radio'] {
 }
 
 input[type='file'] {
-	@apply cursor-pointer;
+	@apply  p-0 cursor-pointer;
 }
 
 input[type='file']::file-selector-button {
-	@apply bg-foreground text-background border-0 rounded-sm mr-3 py-1 px-2 cursor-pointer;
+	@apply h-8 bg-foreground text-background border-0 rounded-s-md mr-3 py-1 px-2 cursor-pointer;
 }
 
 label {
