@@ -1,7 +1,9 @@
 <script lang="ts">
-	import { chartResponse } from '$lib/stores';
 	import { generateChartFromData } from '$lib/utils';
+	import { chartResponse } from '$lib/stores';
 	import { InputZoom } from './ui';
+
+	const { MODE } = import.meta.env;
 
 	const epidemicAlgorithms = {
 		eventBased: 'Event Based',
@@ -32,8 +34,7 @@
 	const simulationStates = ['S', 'I', 'R'];
 
 	async function generateChart(event: SubmitEvent) {
-		const url = 'http://localhost:5000/api/form';
-
+		const url = MODE === 'development' ? 'http://localhost:5000/api/form' : '/api/form';
 		const addStates = (formData: FormData) => {
 			const states = formData.getAll('state');
 			formData.delete('state');

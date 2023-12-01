@@ -3,10 +3,12 @@
 	import { chartResponse } from '$lib/stores';
 	import { FileDropzone, InputZoom } from './ui';
 
+	const { MODE } = import.meta.env;
+
 	let simulationObjectFile: FileList;
 
 	async function generateChartFromSimulationObject(event: SubmitEvent) {
-		const url = 'http://localhost:5000/api/sim';
+		const url = MODE === 'development' ? 'http://localhost:5000/api/sim' : '/api/sim';
 		await generateChartFromData(event, url);
 	}
 </script>
