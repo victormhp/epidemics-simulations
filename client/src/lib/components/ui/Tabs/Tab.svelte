@@ -56,7 +56,7 @@
 </script>
 
 <label
-	class="flex justify-center items-center text-center cursor-pointer transition-colors duration-100 flex-1 px-4 py-2 rounded-t-lg {classesActive}"
+	class="flex justify-center items-center font-medium text-sm text-center cursor-pointer transition-colors duration-100 flex-1 px-4 py-1 rounded-t-lg {classesActive}"
 	{title}
 >
 	<div
