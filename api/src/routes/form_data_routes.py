@@ -6,7 +6,7 @@ from src.config.algorithms import epidemic_algorithms
 main = Blueprint("chart_blueprint", __name__)
 
 
-@main.route("/", methods=["POST"])  # type: ignore
+@main.route("/", methods=["POST"])
 def generate_chart():
     if request.method == "POST":
         try:
