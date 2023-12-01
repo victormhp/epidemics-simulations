@@ -29,7 +29,7 @@ export function getLegend() {
 function createLinesStore(initialValue: ChartLines, onChange?: (value: ChartLines) => void) {
 	const lines = writable(initialValue);
 
-	const update = updater(lines, onChange);
+	const update = updater?.(lines, onChange);
 
 	return {
 		...lines,
@@ -49,7 +49,7 @@ function createScalesStore(initialValue: ChartScales, onChange?: (value: ChartSc
 	const scales = writable(initialValue);
 	let defaultScales = initialValue;
 
-	const update = updater(scales, onChange);
+	const update = updater?.(scales, onChange);
 
 	const setDefault: typeof scales.set = (curr) => {
 		update(() => curr);
@@ -96,7 +96,7 @@ interface ChartActions {
 function createActionsStore(initialValue: ChartActions, onChange?: (value: ChartActions) => void) {
 	const actions = writable(initialValue);
 
-	const update = updater(actions, onChange);
+	const update = updater?.(actions, onChange);
 
 	return {
 		...actions,
