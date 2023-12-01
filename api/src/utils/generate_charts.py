@@ -6,12 +6,6 @@ from numpy.typing import NDArray
 from typing import Any, Callable
 
 
-model_simulations: dict[str, Callable[..., tuple | Simulation_Investigation]] = {
-    "sir": EoN.fast_SIR,
-    "sis": EoN.fast_SIS,
-}
-
-
 model_strategies: dict[str, dict[str, Callable[..., tuple]]] = {
     "sir": {
         "Homogeneous pairwise": EoN.SIR_homogeneous_pairwise_from_graph,
@@ -27,31 +21,41 @@ model_strategies: dict[str, dict[str, Callable[..., tuple]]] = {
 }
 
 
-def get_model_data(
-    G: type[nx.Graph], model: str, states: list[str], tau: float, gamma: float, rho: float, zoom: bool
-) -> list[dict[str, str | float]]:
+def get_model_data(G, model_function, zoom: bool, states: list[str], tau: float, gamma: float, rho: float) -> list[dict[str, str | float]]:
     tmax = 20
     iterations = 5  # run 5 simulations
 
     data = []
 
     # Add simulations
-    simulations = run_simulations(model, states, iterations, G, tau, gamma, rho, tmax, zoom)
+    simulations = run_simulations(
+        G,
+        model_function,
+        zoom,
+        states,
+        iterations,
+        tau,
+        gamma,
+        rho,
+        tmax,
+    )
+
     data.extend(simulations)
 
     # Add strategies
-    strategies = model_strategies[model]
-    for label, strategy in strategies.items():
-        data.extend(run_strategy(model, strategy, label, G, tau, gamma, rho, tmax))
+    # strategies = model_strategies[model]
+    # for label, strategy in strategies.items():
+    #     data.extend(run_strategy(model, strategy, label, G, tau, gamma, rho, tmax))
 
     return data
 
 
-def get_model_data_from_sim(t: NDArray, D: dict[Any, list[int]], zoom: bool) -> list[dict[str, str | float]]:
+def get_model_data_from_sim(t: NDArray, D: dict[Any, NDArray], zoom: bool) -> list[dict[str, str | float]]:
     data = []
 
     for key, values in D.items():
         points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
+        print(points)
 
         if zoom:
             points = simplify_coords(points, 0.05)
@@ -62,35 +66,31 @@ def get_model_data_from_sim(t: NDArray, D: dict[Any, list[int]], zoom: bool) -> 
 
 
 def run_simulations(
-    model: str,
+    G,
+    model_function,
+    zoom: bool,
     states: list[str],
     iterations: int,
-    G: type[nx.Graph],
     tau: float,
     gamma: float,
     rho: float,
     tmax: float,
-    zoom: bool,
 ) -> list[dict[str, str | float]]:
     simulations = []
-    model_function = model_simulations[model]
 
     for i in range(iterations):
         sim_object = model_function(G, tau, gamma, rho=rho, tmax=tmax, return_full_data=True)
 
-        if isinstance(sim_object, Simulation_Investigation):
-            t, D = sim_object.summary()
+        t, D = sim_object.summary()
 
-            for key, values in D.items():
-                if key in states:
-                    points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
+        for key, values in D.items():
+            if key in states:
+                points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
 
-                    if zoom:
-                        points = simplify_coords(points, 0.05)
+                if zoom:
+                    points = simplify_coords(points, 0.05)
 
-                    simulations.extend(
-                        [{"strategy": f"Simulation {key} - {i + 1}", "x": x, "y": y} for [x, y] in points]
-                    )
+                simulations.extend([{"strategy": f"Simulation {key} - {i + 1}", "x": x, "y": y} for [x, y] in points])
 
     return simulations
 

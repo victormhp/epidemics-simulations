@@ -3,9 +3,30 @@
 	import { generateChartFromData } from '$lib/utils';
 	import { InputZoom } from './ui';
 
+	const epidemicAlgorithms = {
+		eventBased: 'Event Based',
+		gillespie: 'Gillespie',
+		discreteTime: 'Discrete Time'
+	};
+
+	let algorithm: keyof typeof epidemicAlgorithms = 'eventBased';
+
 	const simulations = {
-		sir: 'Fast SIR',
-		sis: 'Fast SIS'
+		eventBased: {
+			fastSIR: 'Fast SIR',
+			fastSIS: 'Fast SIS',
+			fastNonMarkovSIR: 'Fast NonMarkov SIR',
+			fastNonMarkovSIS: 'Fast NonMarkov SIS'
+		},
+		gillespie: {
+			gillespieSIR: 'Gillespie SIR',
+			gillespieSIS: 'Gillespie SIS'
+		},
+		discreteTime: {
+			basicDiscreteSIR: 'Basic Discrete SIR',
+			basicDiscreteSIS: 'Basic Discrete SIS',
+			discreteSIR: 'Discrete SIR'
+		}
 	};
 
 	const simulationStates = ['S', 'I', 'R'];
@@ -30,6 +51,20 @@
 		<p class="mt-1 ml-1 text-xs text-primary/50 select-none">GraphML to define your network.</p>
 	</div>
 	<div>
+		<label for="algorithm">Algorithm</label>
+		<select
+			bind:value={algorithm}
+			id="algorithm"
+			name="algorithm"
+			class="flex h-10 w-full rounded-md border border-input bg-background text-sm px-3 py-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+			required
+		>
+			{#each Object.entries(epidemicAlgorithms) as [value, label]}
+				<option {value}>{label}</option>
+			{/each}
+		</select>
+	</div>
+	<div>
 		<label for="model">Model</label>
 		<select
 			id="model"
@@ -37,7 +72,7 @@
 			class="flex h-10 w-full rounded-md border border-input bg-background text-sm px-3 py-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
 			required
 		>
-			{#each Object.entries(simulations) as [value, label]}
+			{#each Object.entries(simulations[algorithm]) as [value, label]}
 				<option {value}>{label}</option>
 			{/each}
 		</select>
