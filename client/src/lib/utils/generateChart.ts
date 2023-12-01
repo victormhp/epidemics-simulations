@@ -13,7 +13,6 @@ export async function generateChartFromData(
 	}
 
 	const chartData = Object.fromEntries([...formData]);
-	console.log(chartData);
 
 	try {
 		chartResponse.update((state) => ({ ...state, loading: true }));

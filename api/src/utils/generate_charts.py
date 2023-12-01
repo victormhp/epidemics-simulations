@@ -55,7 +55,6 @@ def get_model_data_from_sim(t: NDArray, D: dict[Any, NDArray], zoom: bool) -> li
 
     for key, values in D.items():
         points = [[ti, ki] for ti, ki in zip(t.tolist(), values.tolist())]
-        print(points)
 
         if zoom:
             points = simplify_coords(points, 0.05)
