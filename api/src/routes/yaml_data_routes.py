@@ -2,6 +2,7 @@ import yaml
 import networkx as nx
 from flask import Blueprint, request, jsonify
 from src.utils.generate_charts import get_model_data
+from src.config.algorithms import epidemic_algorithms
 
 main = Blueprint("yaml_blueprint", __name__)
 
@@ -30,13 +31,16 @@ def generate_chart_from_yaml():
 
                 if data is not None:
                     # Get and parse data
+                    algorithm = data["algorithm"]
                     model = data["model"]
-                    states = data["states"]
+                    model_function = epidemic_algorithms[algorithm][model]
+
+                    states = list(data["states"])
                     tau = float(data["transmissionRate"])
                     gamma = float(data["recoveryRate"])
                     rho = float(data["fractionInfected"])
 
-                    model_data = get_model_data(G, model, states, tau, gamma, rho, zoom)
+                    model_data = get_model_data(G, model_function, zoom, states, tau, gamma, rho)
 
                     response = jsonify({"inputs": data, "positions": model_data})
                     return response
