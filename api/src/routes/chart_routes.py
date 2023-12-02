@@ -11,104 +11,111 @@ chart = Blueprint("chart", __name__)
 
 @chart.route("/form", methods=["POST"])
 def generate_chart():
-    if request.method == "POST":
-        try:
-            data = request.form.to_dict()
-            files = request.files
+    if request.method != "POST":
+        return jsonify({"error": "Method Not Allowed"}), 405
 
-            # Default network, in case no graphml file is provided
-            N = 10**4
-            G = nx.barabasi_albert_graph(N, 4)
-
-            if "graphml" in files and files["graphml"]:
-                graphml_file = files["graphml"]
-                G = nx.read_graphml(graphml_file)
-
-            # Get and parse data
-            algorithm = data["algorithm"]
-            model = data["model"]
-            model_function = epidemic_algorithms[algorithm][model]
-
-            zoom = bool(data.get("zoom", False))
-            states = list(data["states"])
-            tau = float(data["transmissionRate"])
-            gamma = float(data["recoveryRate"])
-            rho = float(data["fractionInfected"])
-
-            model_data = get_model_data(G, model_function, zoom, states, tau, gamma, rho)
-
-            response = jsonify({"positions": model_data})
-            return response
-        except:
-            response = jsonify({"error": "Invalid JSON data"}), 400
-            return response
-
-
-@chart.route("/yaml", methods=["POST"])
-def generate_chart_from_yaml():
-    if request.method == "POST":
+    try:
+        data = request.form
         files = request.files
-        form = request.form
-        zoom = bool(form.get("zoom", False))
 
         # Default network, in case no graphml file is provided
-        N = 10**5
+        N = 10**4
         G = nx.barabasi_albert_graph(N, 4)
 
         if "graphml" in files and files["graphml"]:
             graphml_file = files["graphml"]
             G = nx.read_graphml(graphml_file)
 
-        yaml_file = files["yaml"]
-        if yaml_file:
-            file_content = yaml_file.read()
+        # Get and parse data
+        algorithm = data["algorithm"]
+        model = data["model"]
+        model_function = epidemic_algorithms[algorithm][model]
 
-            try:
-                data = yaml.safe_load(file_content)
+        states = list(data["states"])
+        iterations = int(data["iterations"])
+        zoom = bool(data.get("zoom", False))
 
-                if data is not None:
-                    # Get and parse data
-                    algorithm = data["algorithm"]
-                    model = data["model"]
-                    model_function = epidemic_algorithms[algorithm][model]
+        # Exclude already extracted data (e.g., algorithm choice, model choice, zoom, states, iterations)
+        # Keep only the parameters relevant to the desired algorithm, converting them to float if needed
+        excluded_keys = ["algorithm", "model", "zoom", "states", "iterations"]
+        algorithm_parameters = {key: float(value) for key, value in data.items() if key not in excluded_keys}
 
-                    states = list(data["states"])
-                    tau = float(data["transmissionRate"])
-                    gamma = float(data["recoveryRate"])
-                    rho = float(data["fractionInfected"])
+        model_data = get_model_data(G, model_function, states, iterations, zoom, **algorithm_parameters)
 
-                    model_data = get_model_data(G, model_function, zoom, states, tau, gamma, rho)
+        return jsonify({"positions": model_data})
+    except:
+        return jsonify({"error": "Invalid JSON data"}), 400
 
-                    response = jsonify({"inputs": data, "positions": model_data})
-                    return response
-                else:
-                    return jsonify({"error": "Invalid YAML file"})
-            except yaml.YAMLError as e:
-                return jsonify({"error": "YAML parsing error: " + str(e)}), 400
-        else:
-            response = jsonify({"error": "No file provided"}), 400
-            return response
+
+@chart.route("/yaml", methods=["POST"])
+def generate_chart_from_yaml():
+    if request.method != "POST":
+        return jsonify({"error": "Method Not Allowed"}), 405
+
+    files = request.files
+    form = request.form
+    zoom = bool(form.get("zoom", False))
+
+    # Default network, in case no graphml file is provided
+    N = 10**4
+    G = nx.barabasi_albert_graph(N, 4)
+
+    graphml_file = files.get("graphml")
+    if graphml_file:
+        G = nx.read_graphml(graphml_file)
+
+    yaml_file = files.get("yaml")
+    if not yaml_file:
+        return jsonify({"error": "No file provided"}), 400
+
+    yaml_file_content = yaml_file.read()
+
+    try:
+        data = yaml.safe_load(yaml_file_content)
+
+        if data:
+            # Get and parse data
+            algorithm = data["algorithm"]
+            model = data["model"]
+            model_function = epidemic_algorithms[algorithm][model]
+
+            states = list(data["states"])
+            iterations = int(data["iterations"])
+
+            # Exclude already extracted data (e.g., algorithm choice, model choice, zoom, states, iterations)
+            # Keep only the parameters relevant to the desired algorithm, converting them to float if needed
+            excluded_keys = ["graphml", "algorithm", "model", "zoom", "states", "iterations"]
+            algorithm_parameters = {key: float(value) for key, value in data.items() if key not in excluded_keys}
+
+            model_data = get_model_data(G, model_function, states, iterations, zoom, **algorithm_parameters)
+
+            return jsonify({"positions": model_data})
+    except yaml.YAMLError as e:
+        return jsonify({"error": "Invalid YAML file: " + str(e)}), 400
 
 
 @chart.route("/sim", methods=["POST"])
 def generate_chart_from_sim():
-    if request.method == "POST":
-        files = request.files
-        form = request.form
+    if request.method != "POST":
+        return jsonify({"error": "Method Not Allowed"}), 405
 
-        sim_file = files["simulation_object"]
-        zoom = bool(form.get("zoom", False))
+    files = request.files
+    form = request.form
 
-        try:
-            sim: Simulation_Investigation = dill.load(sim_file)
-            if sim is not None:
-                t, D = sim.summary()
+    sim_file = files["simulation_object"]
+    if not sim_file:
+        return jsonify({"error": "No simulation object file provided"}), 400
 
-                model_data = get_model_data_from_sim(t, D, zoom)
-                response = jsonify({"inputs": {"zoom": zoom}, "positions": model_data})
-                return response
-            else:
-                return jsonify({"error": "Invalid Simulation object file"})
-        except Exception as e:
-            response = jsonify({"error": "Invalid file format or not a valid simulation object"}), 400
-            return response
+    zoom = bool(form.get("zoom", False))
+    states = list(form["states"])
+    print(states)
+
+    try:
+        sim: Simulation_Investigation = dill.load(sim_file)
+        if sim:
+            model_data = get_model_data_from_sim(sim, states, zoom)
+            return jsonify({"inputs": {"zoom": zoom}, "positions": model_data})
+        else:
+            return jsonify({"error": "Invalid Simulation object file"})
+    except:
+        return jsonify({"error": "Invalid file format or not a valid simulation object"}), 400
