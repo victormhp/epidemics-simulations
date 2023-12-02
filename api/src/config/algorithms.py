@@ -1,8 +1,10 @@
 import EoN
 from EoN import Simulation_Investigation
-from typing import Any, Callable
+from typing import Callable
 
-epidemic_algorithms: dict[str, dict[str, Callable[..., tuple | Simulation_Investigation | list[Any]]]] = {
+EpidemicAlgorithm = Callable[..., Simulation_Investigation | tuple | list]
+
+epidemic_algorithms: dict[str, dict[str, EpidemicAlgorithm]] = {
     "eventBased": {
         "fastSIR": EoN.fast_SIR,
         "fastNonMarkovSIR": EoN.fast_nonMarkov_SIR,
