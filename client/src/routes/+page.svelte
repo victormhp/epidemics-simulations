@@ -11,34 +11,36 @@
 	let tabSet: number = 0;
 </script>
 
-<section class="space-y-8">
-	<TabGroup>
-		<Tab bind:group={tabSet} name="tab1" value={0}>Form Data</Tab>
-		<Tab bind:group={tabSet} name="tab2" value={1}>YAML</Tab>
-		<Tab bind:group={tabSet} name="tab2" value={2}>Simulation Investigation</Tab>
-		<svelte:fragment slot="panel">
-			{#if tabSet === 0}
-				<ChartForm />
-			{:else if tabSet === 1}
-				<ChartFormYaml />
-			{:else if tabSet === 2}
-				<ChartFormSim />
-			{/if}
-		</svelte:fragment>
-	</TabGroup>
-</section>
-<section
-	bind:clientWidth={containerWidth}
-	bind:clientHeight={containerHeight}
-	class="h-[600px] flex justify-center items-center grow rounded-lg border border-border shadow sm:px-4 sm:py-8 lg:h-full"
->
-	{#if $chartResponse.loading}
-		<div in:fade>
-			<Loader2 class="h-16 w-16 animate-spin opacity-20" />
-		</div>
-	{:else if $chartResponse.positions.length > 0}
-		<div in:fade>
-			<EpidemicsChart width={containerWidth} height={containerHeight} />
-		</div>
-	{/if}
-</section>
+<main class="grid grid-cols-1 auto-rows-max gap-8 p-8 lg:grid-cols-[2fr_5fr] lg:grid-rows-1">
+	<section class="space-y-8">
+		<TabGroup>
+			<Tab bind:group={tabSet} name="tab1" value={0}>Form Data</Tab>
+			<Tab bind:group={tabSet} name="tab2" value={1}>YAML</Tab>
+			<Tab bind:group={tabSet} name="tab2" value={2}>Simulation Investigation</Tab>
+			<svelte:fragment slot="panel">
+				{#if tabSet === 0}
+					<ChartForm />
+				{:else if tabSet === 1}
+					<ChartFormYaml />
+				{:else if tabSet === 2}
+					<ChartFormSim />
+				{/if}
+			</svelte:fragment>
+		</TabGroup>
+	</section>
+	<section
+		bind:clientWidth={containerWidth}
+		bind:clientHeight={containerHeight}
+		class="h-[600px] flex justify-center items-center grow rounded-lg border border-border shadow sm:px-4 sm:py-8 lg:h-full"
+	>
+		{#if $chartResponse.loading}
+			<div in:fade>
+				<Loader2 class="h-16 w-16 animate-spin opacity-20" />
+			</div>
+		{:else if $chartResponse.positions.length > 0}
+			<div in:fade>
+				<EpidemicsChart width={containerWidth} height={containerHeight} />
+			</div>
+		{/if}
+	</section>
+</main>

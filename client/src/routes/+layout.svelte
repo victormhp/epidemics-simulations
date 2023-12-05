@@ -1,43 +1,115 @@
 <script lang="ts">
-	import { Github, Menu } from 'lucide-svelte';
+	import { Github, Package, Menu, X } from 'lucide-svelte';
+	import { navMenu, docsMenu } from '$lib/config';
+	import { page } from '$app/stores';
 	import '@fontsource/open-sans';
 	import '@fontsource/open-sans/500.css';
 	import '$lib/styles/index.css';
+
+	let isMenuOpen = false;
+
+	const openMenu = () => (isMenuOpen = true);
+	const closeMenu = () => (isMenuOpen = false);
 </script>
 
+<svelte:head>
+	{#if isMenuOpen}
+		<style>
+			body {
+				overflow: hidden;
+			}
+		</style>
+	{/if}
+</svelte:head>
+
 <div class="h-full grid grid-rows-[min-content,1fr]">
-	<header class="h-fit py-1 px-8 border-b border-border shadow-sm">
+	<header class="h-fit py-2 px-8 border-b border-border shadow-sm">
 		<nav class="flex justify-between items-center">
 			<a href="/" class="text-xl font-semibold p-2">Epidemic Simulations</a>
-			<div class="sm:hidden"><Menu /></div>
+			<button
+				class="sm:hidden"
+				aria-label="Toggle menu"
+				aria-expanded={isMenuOpen}
+				on:click={openMenu}
+			>
+				<Menu />
+			</button>
+			{#if isMenuOpen}
+				<div
+					class="fixed inset-0 flex flex-col justify-between rounded-lg bg-background border border-border shadow-sm p-12 z-50"
+				>
+					<button class="absolute top-4 right-8" tabindex="0" on:click={closeMenu}>
+						<X />
+					</button>
+					<ul class="space-y-8 pt-28">
+						<li>
+							<a href="/docs/introduction" class="font-semibold text-2xl" on:click={closeMenu}>
+								Docs
+							</a>
+						</li>
+						{#each docsMenu.sections as { title, items }}
+							<li class="space-y-2">
+								<span class="font-semibold text-xl">
+									{title}
+								</span>
+								<ul class="space-y-1 text-lg">
+									{#each items as { title, link, hash }}
+										<li class:active={$page.url.hash === hash}>
+											<a href={link} class="w-full ml-4" on:click={closeMenu}>
+												{title}
+											</a>
+										</li>
+									{/each}
+								</ul>
+							</li>
+						{/each}
+					</ul>
+					<div class="w-full flex justify-around text-xl">
+						<a
+							href="https://github.com/victormhp/epidemics-sveltekit-flask"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="flex gap-2"
+							on:click={closeMenu}
+						>
+							<Github />
+							Github
+						</a>
+						<a
+							href="https://epidemicsonnetworks.readthedocs.io/en/latest/EoN.html"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="flex gap-2"
+							on:click={closeMenu}
+						>
+							<Package />
+							EoN Module
+						</a>
+					</div>
+				</div>
+			{/if}
 			<ul class="flex gap-8 font-medium max-sm:hidden">
-				<li><a href="/" class="transition-all hover:text-muted-foreground/50">Docs</a></li>
-				<li>
-					<a
-						href="https://epidemicsonnetworks.readthedocs.io/en/latest/EoN.html"
-						target="_blank"
-						rel="noreferrer noopener"
-						class="transition-colors hover:text-muted-foreground/70"
-					>
-						EoN Module
-					</a>
-				</li>
-				<li>
-					<div class="h-full w-[1px] bg-muted-foreground/70" />
-				</li>
-				<li>
-					<a
-						href="https://github.com/victormhp/epidemics-sveltekit-flask"
-						target="_blank"
-						rel="noreferrer noopener"
-					>
-						<Github class="transition-colors hover:text-muted-foreground/70" />
-					</a>
-				</li>
+				{#each navMenu as { title, link, openInNewTab }}
+					<li>
+						<a
+							href={link}
+							target={openInNewTab ? '_blank' : ''}
+							rel={openInNewTab ? 'noopener noreferrer' : ''}
+							class="transition-all hover:text-muted-foreground/50"
+							on:click={closeMenu}
+						>
+							{title}
+						</a>
+					</li>
+				{/each}
 			</ul>
 		</nav>
 	</header>
-	<main class="grid grid-cols-1 auto-rows-max gap-8 p-8 lg:grid-cols-[2fr_5fr] lg:grid-rows-1">
-		<slot />
-	</main>
+	<slot />
 </div>
+
+<style>
+	.active {
+		@apply rounded bg-muted border border-border;
+	}
+</style>

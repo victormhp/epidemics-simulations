@@ -4,9 +4,6 @@ const config = {
 
 	theme: {
 		extend: {
-			width: {
-				form: 'min(1400px, 100% - 2rem)'
-			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
