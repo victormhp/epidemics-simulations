@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { generateChartFromData } from '$lib/utils';
+	import { simulationStates } from '$lib/config';
 	import { chartResponse } from '$lib/stores';
 	import { FileDropzone, InputZoom } from './ui';
 
 	const { MODE } = import.meta.env;
 
-	const simulationStates = ['S', 'I', 'R'];
 	let simulationObjectFile: FileList;
 
 	async function generateChartFromSimulationObject(event: SubmitEvent) {

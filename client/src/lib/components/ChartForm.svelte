@@ -1,37 +1,12 @@
 <script lang="ts">
 	import { generateChartFromData } from '$lib/utils';
 	import { chartResponse } from '$lib/stores';
+	import { epidemicAlgorithms, simulations, simulationStates } from '$lib/config';
 	import { InputZoom } from './ui';
 
 	const { MODE } = import.meta.env;
 
-	const epidemicAlgorithms = {
-		eventBased: 'Event Based',
-		gillespie: 'Gillespie',
-		discreteTime: 'Discrete Time'
-	};
-
 	let algorithm: keyof typeof epidemicAlgorithms = 'eventBased';
-
-	const simulations = {
-		eventBased: {
-			fastSIR: 'Fast SIR',
-			fastSIS: 'Fast SIS',
-			fastNonMarkovSIR: 'Fast NonMarkov SIR',
-			fastNonMarkovSIS: 'Fast NonMarkov SIS'
-		},
-		gillespie: {
-			gillespieSIR: 'Gillespie SIR',
-			gillespieSIS: 'Gillespie SIS'
-		},
-		discreteTime: {
-			basicDiscreteSIR: 'Basic Discrete SIR',
-			basicDiscreteSIS: 'Basic Discrete SIS',
-			discreteSIR: 'Discrete SIR'
-		}
-	};
-
-	const simulationStates = ['S', 'I', 'R'];
 
 	async function generateChart(event: SubmitEvent) {
 		const url = MODE === 'development' ? 'http://localhost:5000/api/form' : '/api/form';
