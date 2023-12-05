@@ -17,7 +17,6 @@ export const simulations = {
 	},
 	discreteTime: {
 		basicDiscreteSIR: 'Basic Discrete SIR',
-		basicDiscreteSIS: 'Basic Discrete SIS',
-		discreteSIR: 'Discrete SIR'
+		basicDiscreteSIS: 'Basic Discrete SIS'
 	}
 };
