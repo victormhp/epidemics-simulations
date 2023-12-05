@@ -15,7 +15,8 @@ def generate_chart():
         return jsonify({"error": "Method Not Allowed"}), 405
 
     try:
-        data = request.form
+        form = request.form.to_dict()
+        data = {k: v for k, v in form.items() if v}
         files = request.files
 
         # Default network, in case no graphml file is provided

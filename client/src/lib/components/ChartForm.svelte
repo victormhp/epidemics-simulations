@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { epidemicAlgorithms, simulations, simulationStates } from '$lib/config';
 	import { generateChartFromData } from '$lib/utils';
 	import { chartResponse } from '$lib/stores';
-	import { epidemicAlgorithms, simulations, simulationStates } from '$lib/config';
 	import { InputZoom } from './ui';
 
 	const { MODE } = import.meta.env;
@@ -56,10 +56,6 @@
 			</select>
 		</div>
 	</div>
-	<div class="w-full">
-		<label for="iterations">Iterations</label>
-		<input id="iterations" name="iterations" type="number" min="0" step="1" required />
-	</div>
 	<fieldset>
 		<div class="flex gap-x-4">
 			<legend class="text-sm">Select states:</legend>
@@ -73,17 +69,42 @@
 			</div>
 		</div>
 	</fieldset>
-	<div>
-		<label for="transmission">Transmission Rate</label>
-		<input id="transmission" name="tau" type="number" min="0" step="any" required />
+	{#if algorithm === 'discreteTime'}
+		<div class="w-full">
+			<label for="probability">Transmission probability *</label>
+			<input id="probability" name="p" type="number" min="0" step="0.01" required />
+		</div>
+	{:else}
+		<div class="flex gap-8 justify-between">
+			<div class="w-full">
+				<label for="transmission">Transmission Rate *</label>
+				<input id="transmission" name="tau" type="number" min="0" step="any" required />
+			</div>
+			<div class="w-full">
+				<label for="recovery">Recovery Rate *</label>
+				<input id="recovery" name="gamma" type="number" min="0" step="0.001" required />
+			</div>
+		</div>
+	{/if}
+	<div class="flex gap-8 justify-between">
+		<div class="w-full">
+			<label for="infected">Initial Fraction Infected *</label>
+			<input id="infected" name="rho" type="number" min="0" step="any" required />
+		</div>
+		<div class="w-full">
+			<label for="iterations">Iterations *</label>
+			<input id="iterations" name="iterations" type="number" min="0" step="1" required />
+		</div>
 	</div>
-	<div>
-		<label for="recovery">Recovery Rate</label>
-		<input id="recovery" name="gamma" type="number" min="0" step="0.001" required />
-	</div>
-	<div>
-		<label for="infected">Fraction initially infected</label>
-		<input id="infected" name="rho" type="number" min="0" step="any" required />
+	<div class="flex gap-8 justify-between">
+		<div class="w-full">
+			<label for="tmin">Tmin</label>
+			<input id="tmin" name="tmin" type="number" min="0" step="1" />
+		</div>
+		<div class="w-full">
+			<label for="tmax">Tmax</label>
+			<input id="tmax" name="tmax" type="number" min="0" step="1" />
+		</div>
 	</div>
 	<InputZoom />
 	<button disabled={$chartResponse.loading} type="submit" class="btn">Generate</button>
