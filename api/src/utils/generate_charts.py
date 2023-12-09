@@ -1,6 +1,7 @@
 from EoN import Simulation_Investigation
 from simplification.cutil import simplify_coords
 from src.config.algorithms import EpidemicAlgorithm
+from typing import Union
 
 
 def get_model_data(
@@ -10,7 +11,7 @@ def get_model_data(
     iterations: int,
     zoom: bool,
     **kwargs,
-) -> list[dict[str, str | float]]:
+) -> list[dict[str, Union[str, float]]]:
     data = []
 
     for i in range(iterations):
@@ -30,7 +31,7 @@ def get_model_data(
     return data
 
 
-def get_model_data_from_sim(sim: Simulation_Investigation, states: list[str], zoom: bool) -> list[dict[str, str | float]]:
+def get_model_data_from_sim(sim: Simulation_Investigation, states: list[str], zoom: bool) -> list[dict[str, Union[str, float]]]:
     data = []
     t, D = sim.summary()
 

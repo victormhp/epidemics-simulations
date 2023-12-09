@@ -1,8 +1,8 @@
 import EoN
 from EoN import Simulation_Investigation
-from typing import Callable
+from typing import Callable, Union
 
-EpidemicAlgorithm = Callable[..., Simulation_Investigation | tuple | list]
+EpidemicAlgorithm = Callable[..., Union[Simulation_Investigation, tuple, list]]
 
 epidemic_algorithms: dict[str, dict[str, EpidemicAlgorithm]] = {
     "eventBased": {
