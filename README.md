@@ -1,4 +1,4 @@
-![](static/eon.png)
+![](client/static/eon.png)
 
 # Epidemics Simulations
 
