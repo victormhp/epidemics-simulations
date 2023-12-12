@@ -23,23 +23,23 @@ def generate_chart():
         N = 10**4
         G = nx.barabasi_albert_graph(N, 4)
 
-        if "graphml" in files and files["graphml"]:
-            graphml_file = files["graphml"]
+        graphml_file = files.get("graphml")
+        if graphml_file:
             G = nx.read_graphml(graphml_file)
 
         # Get and parse data
-        algorithm = data["algorithm"]
-        model = data["model"]
+        algorithm = data.get("algorithm")
+        model = data.get("model")
         model_function = epidemic_algorithms[algorithm][model]
 
-        states = list(data["states"])
-        iterations = int(data["iterations"])
+        states = list(data.get("states"))
+        iterations = int(data.get("iterations"))
         zoom = bool(data.get("zoom", False))
 
         # Exclude already extracted data (e.g., algorithm choice, model choice, zoom, states, iterations)
         # Keep only the parameters relevant to the desired algorithm, converting them to float if needed
-        excluded_keys = ["algorithm", "model", "zoom", "states", "iterations"]
-        algorithm_parameters = {key: float(value) for key, value in data.items() if key not in excluded_keys}
+        excluded_keys = ["graphml", "algorithm", "model", "zoom", "states", "iterations"]
+        algorithm_parameters = {key: float(value) for key, value in data.items() if key not in excluded_keys and value}
 
         model_data = get_model_data(G, model_function, states, iterations, zoom, **algorithm_parameters)
 
@@ -76,17 +76,17 @@ def generate_chart_from_yaml():
 
         if data:
             # Get and parse data
-            algorithm = data["algorithm"]
-            model = data["model"]
+            algorithm = data.get("algorithm")
+            model = data.get("model")
             model_function = epidemic_algorithms[algorithm][model]
 
-            states = list(data["states"])
-            iterations = int(data["iterations"])
+            states = list(data.get("states"))
+            iterations = int(data.get("iterations"))
 
             # Exclude already extracted data (e.g., algorithm choice, model choice, zoom, states, iterations)
             # Keep only the parameters relevant to the desired algorithm, converting them to float if needed
             excluded_keys = ["graphml", "algorithm", "model", "zoom", "states", "iterations"]
-            algorithm_parameters = {key: float(value) for key, value in data.items() if key not in excluded_keys}
+            algorithm_parameters = {key: float(value) for key, value in data.items() if key not in excluded_keys and value}
 
             model_data = get_model_data(G, model_function, states, iterations, zoom, **algorithm_parameters)
 
@@ -103,18 +103,18 @@ def generate_chart_from_sim():
     files = request.files
     form = request.form
 
-    sim_file = files["simulation_object"]
+    sim_file = files.get("simulation_object")
     if not sim_file:
         return jsonify({"error": "No simulation object file provided"}), 400
 
     zoom = bool(form.get("zoom", False))
-    states = list(form["states"])
+    states = list(form.get("states"))
 
     try:
         sim: Simulation_Investigation = dill.load(sim_file)
         if sim:
             model_data = get_model_data_from_sim(sim, states, zoom)
-            return jsonify({"inputs": {"zoom": zoom}, "positions": model_data})
+            return jsonify({"positions": model_data})
         else:
             return jsonify({"error": "Invalid Simulation object file"})
     except:
