@@ -50,13 +50,13 @@ Please note that this may **not be recommended** if perfect accuracy is required
 
 In addition, uou have the option to create a chart by uploading a YAML file. Once the chart is generated, you can download the inputs as a YAML file. This feature is designed to make storing your charts easier.
 
-![EoN Form](/images/eon-yaml.webp)
+![EoN Yaml Form](/images/eon-yaml.webp)
 
 ## Simulation Investigation Object
 
 If you need to generate a chart using algorithms that are not displayed in the default form, you can upload a serialized Simulation Investigation Object from the EoN module.
 
-![EoN Form](/images/eon-sim.webp)
+![EoN Simulation Object Form](/images/eon-sim.webp)
 
 The following example shows how to serialized a Simulation Investigation Object using dill. The examples uses dill because pickle can show several problems when trying to serialized lambdas.
 
