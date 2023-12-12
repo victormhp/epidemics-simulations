@@ -4,7 +4,7 @@ subtitle: Download Chart
 description: How to download?.
 ---
 
-![EoN Form](/images/eon-download.png)
+![EoN Form](/images/eon-download.webp)
 
 ## Download Inputs
 
