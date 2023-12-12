@@ -1,13 +1,13 @@
 export const navMenu = [
-	{ title: 'Docs', link: '/docs/introduction', openInNewTab: false },
+	{ title: 'Docs', href: '/docs/introduction', openInNewTab: false },
 	{
 		title: 'EoN Module',
-		link: 'https://epidemicsonnetworks.readthedocs.io/en/latest/EoN.html',
+		href: 'https://epidemicsonnetworks.readthedocs.io/en/latest/EoN.html',
 		openInNewTab: true
 	},
 	{
 		title: 'Github',
-		link: 'https://github.com/victormhp/epidemics-sveltekit-flask',
+		href: 'https://github.com/victormhp/epidemics-sveltekit-flask',
 		openInNewTab: true
 	}
 ];
@@ -16,36 +16,42 @@ export const docsMenu = {
 	sections: [
 		{
 			title: 'Getting Started',
+			href: '/docs/introduction',
 			items: [
-				{ title: 'Introduction', link: '/docs/introduction#introduction', hash: '#introduction' },
-				{ title: 'EoN Module', link: '/docs/introduction#eon', hash: '#eon' }
+				{
+					title: 'Epidemics Simulations',
+					href: '/docs/introduction#epidemics-simulations'
+				},
+				{ title: 'EoN Module', href: '/docs/introduction#eon-module' }
 			]
 		},
 		{
 			title: 'Generate Chart',
+			href: '/docs/chart',
 			items: [
-				{ title: 'Form Data', link: '/docs/chart#form-data', hash: '#form-data' },
-				{ title: 'GraphML', link: '/docs/chart#graphml', hash: '#graphml' },
-				{ title: 'YAML', link: '/docs/chart#yaml', hash: '#yaml' },
+				{
+					title: 'Upload your network',
+					href: '/docs/chart#upload-your-network'
+				},
+				{ title: 'Form Data', href: '/docs/chart#form-data' },
+				{ title: 'YAML', href: '/docs/chart#yaml' },
 				{
 					title: 'Simulation Investigation',
-					link: '/docs/chart#simulation-investigation',
-					hash: '#simulation-investigation'
+					href: '/docs/chart#simulation-investigation-object'
 				}
 			]
 		},
 		{
 			title: 'Download options',
+			href: '/docs/download',
 			items: [
 				{
 					title: 'Download Inputs',
-					link: '/docs/download#download-inputs',
-					hash: '#download-inputs'
+					href: '/docs/download#download-inputs'
 				},
 				{
 					title: 'Download Chart',
-					link: '/docs/download#download-chart',
-					hash: '#download-chart'
+					href: '/docs/download#download-chart'
 				}
 			]
 		}
