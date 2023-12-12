@@ -1,6 +1,18 @@
 import type { ChartResponse } from '$lib/models';
 import { chartResponse } from '$lib/stores';
 
+function excludeFileInputs(data: FormData) {
+	const filteredData = new FormData();
+
+	data.forEach((value, key) => {
+		if (!(value instanceof File)) {
+			filteredData.append(key, value);
+		}
+	});
+
+	return filteredData;
+}
+
 export async function generateChartFromData(
 	event: SubmitEvent,
 	url: string,
@@ -12,7 +24,8 @@ export async function generateChartFromData(
 		modifyFormData(formData);
 	}
 
-	const chartData = Object.fromEntries([...formData]);
+	const filteredFormData = excludeFileInputs(formData);
+	const chartData = Object.fromEntries([...filteredFormData]);
 
 	try {
 		chartResponse.update((state) => ({ ...state, loading: true }));
