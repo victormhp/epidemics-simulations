@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { Github, Package, Menu, X } from 'lucide-svelte';
 	import { navMenu, docsMenu } from '$lib/config';
+	import { getHash } from '$lib/utils';
 	import { page } from '$app/stores';
-	import '@fontsource/open-sans';
-	import '@fontsource/open-sans/500.css';
 	import '$lib/styles/index.css';
 
 	let isMenuOpen = false;
@@ -22,12 +21,12 @@
 	{/if}
 </svelte:head>
 
-<div class="h-full grid grid-rows-[min-content,1fr]">
-	<header class="h-fit py-2 px-8 border-b border-border shadow-sm">
+<div class="min-h-screen xl:flex">
+	<header class="fixed w-full h-fit py-2 px-8 bg-background border-b border-border shadow-sm z-50">
 		<nav class="flex justify-between items-center">
 			<a href="/" class="text-xl font-semibold p-2">Epidemic Simulations</a>
 			<button
-				class="sm:hidden"
+				class="lg:hidden"
 				aria-label="Toggle menu"
 				aria-expanded={isMenuOpen}
 				on:click={openMenu}
@@ -53,9 +52,9 @@
 									{title}
 								</span>
 								<ul class="space-y-1 text-lg">
-									{#each items as { title, link, hash }}
-										<li class:active={$page.url.hash === hash}>
-											<a href={link} class="w-full ml-4" on:click={closeMenu}>
+									{#each items as { title, href }}
+										<li class:active={$page.url.hash === getHash(href)}>
+											<a {href} class="w-full ml-4" on:click={closeMenu}>
 												{title}
 											</a>
 										</li>
@@ -88,11 +87,11 @@
 					</div>
 				</div>
 			{/if}
-			<ul class="flex gap-8 font-medium max-sm:hidden">
-				{#each navMenu as { title, link, openInNewTab }}
+			<ul class="flex gap-8 font-medium max-lg:hidden">
+				{#each navMenu as { title, href, openInNewTab }}
 					<li>
 						<a
-							href={link}
+							{href}
 							target={openInNewTab ? '_blank' : ''}
 							rel={openInNewTab ? 'noopener noreferrer' : ''}
 							class="transition-all hover:text-muted-foreground/50"
