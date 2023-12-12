@@ -109,7 +109,6 @@ def generate_chart_from_sim():
 
     zoom = bool(form.get("zoom", False))
     states = list(form["states"])
-    print(states)
 
     try:
         sim: Simulation_Investigation = dill.load(sim_file)
