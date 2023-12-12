@@ -25,8 +25,8 @@ const config = {
 	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
 	kit: {
 		adapter: adapter({
-			pages: '../server/src/static/build',
-			assets: '../server/src/static/build',
+			pages: '../server/src/build',
+			assets: '../server/src/build',
 			fallback: undefined,
 			precompress: false,
 			strict: true
