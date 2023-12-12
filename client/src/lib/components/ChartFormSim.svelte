@@ -9,7 +9,7 @@
 	let simulationObjectFile: FileList;
 
 	async function generateChartFromSimulationObject(event: SubmitEvent) {
-		const url = MODE === 'development' ? 'http://localhost:5000/api/sim' : '/api/sim';
+		const url = MODE === 'development' ? 'http://localhost:8000/api/sim' : '/api/sim';
 
 		const addStates = (formData: FormData) => {
 			const states = formData.getAll('state');

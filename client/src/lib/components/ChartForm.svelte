@@ -9,7 +9,7 @@
 	let algorithm: keyof typeof epidemicAlgorithms = 'eventBased';
 
 	async function generateChart(event: SubmitEvent) {
-		const url = MODE === 'development' ? 'http://localhost:5000/api/form' : '/api/form';
+		const url = MODE === 'development' ? 'http://localhost:8000/api/form' : '/api/form';
 
 		const addStates = (formData: FormData) => {
 			const states = formData.getAll('state');
