@@ -18,7 +18,7 @@
 	<meta property="og:description" content="Dashboard to generate charts" />
 </svelte:head>
 
-<main class="h-auto grid grid-cols-1 gap-8 p-8 pt-28 xl:grid-cols-[2fr_5fr]">
+<main class="w-full h-auto grid grid-cols-1 gap-8 p-8 pt-28 xl:grid-cols-[2fr_5fr]">
 	<section class="space-y-8 h-fit">
 		<TabGroup>
 			<Tab bind:group={tabSet} name="tab1" value={0}>Form Data</Tab>
