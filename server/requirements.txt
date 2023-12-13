@@ -1,3 +1,4 @@
+altgraph==0.17.4
 blinker==1.6.2
 click==8.1.7
 contourpy==1.1.0
@@ -6,8 +7,11 @@ dill==0.3.7
 EoN==1.1
 Flask==2.3.3
 Flask-Cors==4.0.0
+flaskwebgui==1.0.8
 fonttools==4.42.1
 gunicorn==21.2.0
+importlib-metadata==7.0.0
+importlib-resources==6.1.1
 itsdangerous==2.1.2
 Jinja2==3.1.2
 kiwisolver==1.4.5
@@ -17,6 +21,9 @@ networkx==3.1
 numpy==1.25.2
 packaging==23.1
 Pillow==10.0.0
+psutil==5.9.6
+pyinstaller==6.3.0
+pyinstaller-hooks-contrib==2023.10
 pyparsing==3.0.9
 python-dateutil==2.8.2
 PyYAML==6.0.1
@@ -24,3 +31,4 @@ scipy==1.11.2
 simplification==0.6.11
 six==1.16.0
 Werkzeug==2.3.7
+zipp==3.17.0
