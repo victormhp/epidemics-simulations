@@ -46,11 +46,11 @@
 								Docs
 							</a>
 						</li>
-						{#each docsMenu.sections as { title, items }}
+						{#each docsMenu.sections as { title, href, items }}
 							<li class="space-y-2">
-								<span class="font-semibold text-xl">
+								<a {href} class="font-semibold text-xl" on:click={closeMenu}>
 									{title}
-								</span>
+								</a>
 								<ul class="space-y-1 text-lg">
 									{#each items as { title, href }}
 										<li class:active={$page.url.hash === getHash(href)}>
