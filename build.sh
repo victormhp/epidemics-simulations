@@ -6,10 +6,10 @@ pnpm install
 pnpm run build
 
 
-# Create venv
-cd ../api/
+# Create and activate venv
+cd ../server/
 python -m venv venv
 source ./venv/bin/activate
 
-# Install libraries and run flask app
+# Install python libraries 
 pip install -r requirements.txt
