@@ -67,7 +67,7 @@ python desktop.py
 
 ## Executable for Desktop App
 
-to create an executable for the desktop app, we utilize [PyInstaller](https://github.com/pyinstaller/pyinstaller). You have two options:
+to create an executable for the desktop app, we utilize [PyInstaller](https://github.com/pyinstaller/pyinstaller). You have two options to build the app:
 
 ### Option 1: Run the provided script
 
@@ -84,6 +84,12 @@ pyinstaller -w -F --name "epidemics" --clean --add-data "src/build:build" deskto
 ```
 
 **Note**: In the --add-data argument the path separator is platform specific, os.pathsep (which is ; on Windows and : on most unix systems) is used.
+
+Run the app
+
+```sh
+./dist/epidemics
+```
 
 ## EoN Module
 
