@@ -13,7 +13,7 @@ if getattr(sys, 'frozen', False):
     static_folder = os.path.join(sys._MEIPASS, './build')
     app = Flask(__name__, static_folder=static_folder, static_url_path='/')
 else:
-    app = Flask(__name__, static_folder="./build", static_url_path='/')
+    app = Flask(__name__, static_folder="../../build", static_url_path='/')
 
 
 CORS(app, resources={r"/api/*": {"origins": "*"}})
