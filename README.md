@@ -10,7 +10,7 @@ Ensure you have the following prerequisites installed on your system:
 
 - Python 3.9 - 3.10
 - pnpm
-- Google Chrome (Only for desktop app)
+- Chromium (Only for desktop app)
 
 ## Installation
 
@@ -26,15 +26,6 @@ Navigate to the project directory
 cd epidemics-sveltkit-flask.git
 ```
 
-Use the provided build script for a quick setup
-
-```sh
-chmod +x build.sh
-./build.sh
-```
-
-or do it manually
-
 ```sh
 # Install and build frontend
 cd ./client/
@@ -43,8 +34,8 @@ pnpm run build
 
 
 # Create and activate venv
-cd ../server/
-python -m venv venv
+cd ./server/
+python3 -m venv venv
 source ./venv/bin/activate
 
 # Install python libraries
@@ -67,20 +58,11 @@ python desktop.py
 
 ## Executable for Desktop App
 
-to create an executable for the desktop app, we utilize [PyInstaller](https://github.com/pyinstaller/pyinstaller). You have two options to build the app:
-
-### Option 1: Run the provided script
+To create an executable for the desktop app, we utilize [PyInstaller](https://github.com/pyinstaller/pyinstaller). You have two options to build the app:
 
 ```sh
 chmod +x desktop.sh
 ./desktop.sh
-```
-
-### Option 2: Run the pyinstaller command manually.
-
-```sh
-cd ./server/
-pyinstaller -w -F --name "epidemics" --clean --add-data "src/build:build" desktop.py
 ```
 
 **Note**: In the --add-data argument the path separator is platform specific, os.pathsep (which is ; on Windows and : on most unix systems) is used.
@@ -88,7 +70,7 @@ pyinstaller -w -F --name "epidemics" --clean --add-data "src/build:build" deskto
 Run the app
 
 ```sh
-./dist/epidemics
+./app/dist/epidemics
 ```
 
 ## EoN Module
