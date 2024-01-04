@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FileBarChart2, FileImage, FileText } from 'lucide-svelte';
+	import Icon from '@iconify/svelte';
 	import { downloadChartPNG, downloadChartSVG, downloadInputData, clickOutside } from '$lib/utils';
 	import { chartResponse } from '$lib/stores';
 
@@ -15,20 +15,20 @@
 	on:outclick={closeMenu}
 >
 	<button class="btn-menu" on:click={() => downloadInputData(chartInputs)}>
-		<span class="mr-4">
-			<FileText size="16" />
+		<span class="mr-3">
+			<Icon icon="lucide:file-text" width="20" height="20" />
 		</span>
 		Download Inputs
 	</button>
 	<button class="btn-menu" on:click={() => downloadChartPNG('#chart')}>
-		<span class="mr-4">
-			<FileImage size="16" />
+		<span class="mr-3">
+			<Icon icon="lucide:file-image" width="20" height="20" />
 		</span>
 		Download PNG
 	</button>
 	<button class="btn-menu" on:click={() => downloadChartSVG('#chart')}>
-		<span class="mr-4">
-			<FileBarChart2 size="16" />
+		<span class="mr-3">
+			<Icon icon="lucide:file-bar-chart" width="20" height="20" />
 		</span>
 		Download SVG
 	</button>

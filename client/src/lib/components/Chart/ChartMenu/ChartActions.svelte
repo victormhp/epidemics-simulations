@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MoreVertical, RotateCcw, ZoomIn, ZoomOut } from 'lucide-svelte';
+	import Icon from '@iconify/svelte';
 	import { chartActions, chartResponse } from '$lib/stores';
 
 	export let toggleMenu: () => void;
@@ -10,17 +10,17 @@
 
 <div class="flex gap-y-2 sm:flex-col lg:justify-center">
 	<button class="btn-icon" on:click={toggleMenu}>
-		<MoreVertical color="#71717a" size="20" />
+		<Icon icon="tabler:dots-vertical" color="#71717a" width="24" height="24" />
 	</button>
 	{#if isZoomEnable}
 		<button class="btn-icon" on:click={resetAxis}>
-			<RotateCcw color="#71717a" size="20" />
+			<Icon icon="tabler:reload" color="#71717a" width="24" height="24" />
 		</button>
 		<button class="btn-icon" on:click={zoomIn}>
-			<ZoomIn color="#71717a" size="20" />
+			<Icon icon="tabler:zoom-in" color="#71717a" width="24" height="24" />
 		</button>
 		<button class="btn-icon" on:click={zoomOut}>
-			<ZoomOut color="#71717a" size="20" />
+			<Icon icon="tabler:zoom-out" color="#71717a" width="24" height="24" />
 		</button>
 	{/if}
 </div>

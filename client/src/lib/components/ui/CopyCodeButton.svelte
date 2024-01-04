@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Copy, CopyCheck } from 'lucide-svelte';
+	import Icon from '@iconify/svelte';
 	import { cubicOut } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
 
@@ -57,14 +57,14 @@
 			class="col-[1/span_1] row-[1/span_1]"
 			transition:fade={{ easing: cubicOut, duration: 400 }}
 		>
-			<CopyCheck color="#71717a" />
+			<Icon icon="tabler:copy-check" color="#71717a" width="20" height="20" />
 		</span>
 	{:else}
 		<span
 			class="col-[1/span_1] row-[1/span_1]"
 			transition:fade={{ easing: cubicOut, duration: 400 }}
 		>
-			<Copy color="#71717a" />
+			<Icon icon="tabler:copy" color="#71717a" width="20" height="20" />
 		</span>
 	{/if}
 </button>

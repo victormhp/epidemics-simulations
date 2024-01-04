@@ -1,8 +1,8 @@
 <script lang="ts">
+	import Icon from '@iconify/svelte';
 	import { ChartForm, ChartFormYaml, ChartFormSim, EpidemicsChart } from '$lib/components';
 	import { Tab, TabGroup } from '$lib/components/ui';
 	import { chartResponse } from '$lib/stores';
-	import { Loader2 } from 'lucide-svelte';
 	import { fade } from 'svelte/transition';
 
 	let containerWidth: number;
@@ -42,7 +42,12 @@
 	>
 		{#if $chartResponse.loading}
 			<div in:fade>
-				<Loader2 class="h-16 w-16 animate-spin opacity-20" />
+				<Icon
+					class="h-16 w-16 animate-spin opacity-20"
+					icon="tabler:loader-2"
+					width="48"
+					height="48"
+				/>
 			</div>
 		{:else if $chartResponse.positions.length > 0}
 			<div in:fade>

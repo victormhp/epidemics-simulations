@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Github, Package, Menu, X } from 'lucide-svelte';
+	import Icon from '@iconify/svelte';
 	import { navMenu, docsMenu } from '$lib/config';
 	import { getHash } from '$lib/utils';
 	import { page } from '$app/stores';
@@ -31,16 +31,16 @@
 				aria-expanded={isMenuOpen}
 				on:click={openMenu}
 			>
-				<Menu />
+				<Icon icon="tabler:menu-2" width="24" height="24" />
 			</button>
 			{#if isMenuOpen}
 				<div
 					class="fixed inset-0 flex flex-col justify-between rounded-lg bg-background border border-border shadow-sm p-12 z-50"
 				>
 					<button class="absolute top-4 right-8" tabindex="0" on:click={closeMenu}>
-						<X />
+						<Icon icon="tabler:x" width="24" height="24" />
 					</button>
-					<ul class="space-y-8 pt-28">
+					<ul class="space-y-8">
 						<li>
 							<a href="/docs/introduction" class="font-semibold text-2xl" on:click={closeMenu}>
 								Docs
@@ -68,20 +68,20 @@
 							href="https://github.com/victormhp/epidemics-sveltekit-flask"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="flex gap-2"
+							class="flex gap-2 items-center"
 							on:click={closeMenu}
 						>
-							<Github />
+							<Icon icon="tabler:brand-github" width="24" height="24" />
 							Github
 						</a>
 						<a
 							href="https://epidemicsonnetworks.readthedocs.io/en/latest/EoN.html"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="flex gap-2"
+							class="flex gap-2 items-center"
 							on:click={closeMenu}
 						>
-							<Package />
+							<Icon icon="tabler:package" width="24" height="24" />
 							EoN Module
 						</a>
 					</div>
