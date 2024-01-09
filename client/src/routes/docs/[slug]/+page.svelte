@@ -12,10 +12,10 @@
 </svelte:head>
 
 <article class="px-4 lg:px-12">
-	<p class="font-semibold text-muted-foreground/50 uppercase">{data.meta.subtitle}</p>
+	<p class="font-bold text-muted-foreground/50 uppercase">{data.meta.subtitle}</p>
 	<h1 class="text-4xl mb-16 lg:text-5xl">{data.meta.title}</h1>
 	<div
-		class="prose prose-zinc prose-h2:border-b prose-h2:border-border prose-a:no-underline prose-a:font-semibold max-w-none"
+		class="prose prose-zinc prose-h2:border-b prose-h2:border-border prose-a:no-underline prose-a:font-bold max-w-none"
 	>
 		<CopyCodeInjector>
 			<svelte:component this={data.content} />

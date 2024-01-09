@@ -11,7 +11,7 @@
 		<ul class="space-y-12 text-muted-foreground ml-auto px-0 pl-28 py-28">
 			{#each docsMenu.sections as { title, href, items }}
 				<li class="space-y-2">
-					<a {href} class="font-semibold text-foreground tracking-wider uppercase">
+					<a {href} class="font-bold text-foreground tracking-wider uppercase">
 						{title}
 					</a>
 					<ul class="space-y-2 border-l border-muted-foreground">

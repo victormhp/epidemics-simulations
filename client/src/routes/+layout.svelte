@@ -24,7 +24,7 @@
 <div class="min-h-screen xl:flex">
 	<header class="fixed w-full h-fit py-2 px-8 bg-background border-b border-border shadow-sm z-50">
 		<nav class="flex justify-between items-center">
-			<a href="/" class="text-xl font-semibold p-2">Epidemic Simulations</a>
+			<a href="/" class="text-xl font-bold p-2">Epidemic Simulations</a>
 			<button
 				class="lg:hidden"
 				aria-label="Toggle menu"
@@ -42,13 +42,13 @@
 					</button>
 					<ul class="space-y-8">
 						<li>
-							<a href="/docs/introduction" class="font-semibold text-2xl" on:click={closeMenu}>
+							<a href="/docs/introduction" class="font-bold text-2xl" on:click={closeMenu}>
 								Docs
 							</a>
 						</li>
 						{#each docsMenu.sections as { title, href, items }}
 							<li class="space-y-2">
-								<a {href} class="font-semibold text-xl" on:click={closeMenu}>
+								<a {href} class="font-bold text-xl" on:click={closeMenu}>
 									{title}
 								</a>
 								<ul class="space-y-1 text-lg">
