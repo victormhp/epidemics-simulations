@@ -6,14 +6,14 @@
 	import { chartResponse } from '$lib/stores';
 	import { fade } from 'svelte/transition';
 
-	let containerWidth: number;
-	let containerHeight: number;
+	let containerWidth = 0;
+	let containerHeight = 0;
 
 	let tabSet: number = 0;
 </script>
 
-<main class="w-full h-auto grid grid-cols-1 gap-8 p-8 pt-28 xl:grid-cols-[2fr_5fr]">
-	<section class="space-y-8 h-fit">
+<main class="w-full h-screen grid grid-cols-1 gap-8 p-8 pt-28 xl:grid-cols-[2fr_5fr]">
+	<section class="space-y-8">
 		<TabGroup>
 			<Tab bind:group={tabSet} name="tab1" value={0}>Form Data</Tab>
 			<Tab bind:group={tabSet} name="tab2" value={1}>YAML</Tab>

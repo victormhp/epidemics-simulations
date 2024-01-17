@@ -82,18 +82,18 @@
 			</div>
 			<div class="w-full">
 				<label for="recovery">Recovery Rate *</label>
-				<input id="recovery" name="gamma" type="number" min="0" step="0.001" required />
+				<input id="recovery" name="gamma" type="number" min="0" step="any" required />
 			</div>
 		</div>
 	{/if}
 	<div class="flex gap-8 justify-between">
 		<div class="w-full">
-			<label for="infected">Initial Fraction Infected *</label>
-			<input id="infected" name="rho" type="number" min="0" step="any" required />
-		</div>
-		<div class="w-full">
 			<label for="iterations">Iterations *</label>
 			<input id="iterations" name="iterations" type="number" min="0" step="1" required />
+		</div>
+		<div class="w-full">
+			<label for="infected">Initial Fraction Infected</label>
+			<input id="infected" name="rho" type="number" min="0" step="any" />
 		</div>
 	</div>
 	<div class="flex gap-8 justify-between">
