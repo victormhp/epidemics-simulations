@@ -1,9 +1,7 @@
-<script lang="ts">
+<script>
+	import { Link } from 'svelte-routing';
 	import Icon from '@iconify/svelte';
 	import { navMenu, docsMenu } from '$lib/config';
-	import { getHash } from '$lib/utils';
-	import { page } from '$app/stores';
-	import '$lib/styles/index.css';
 
 	let isMenuOpen = false;
 
@@ -21,10 +19,10 @@
 	{/if}
 </svelte:head>
 
-<div class="min-h-screen xl:flex">
+<div class="min-h-screen flex">
 	<header class="fixed w-full h-fit py-2 px-8 bg-background border-b border-border shadow-sm z-50">
 		<nav class="flex justify-between items-center">
-			<a href="/" class="text-xl font-bold p-2">Epidemic Simulations</a>
+			<Link to="/" class="text-xl font-bold p-2">Epidemic Simulations</Link>
 			<button
 				class="lg:hidden"
 				aria-label="Toggle menu"
@@ -42,19 +40,19 @@
 					</button>
 					<ul class="space-y-8">
 						<li>
-							<a href="/docs/introduction" class="font-bold text-2xl" on:click={closeMenu}>
+							<Link to="/docs/introduction" class="font-bold text-2xl" on:click={closeMenu}>
 								Docs
-							</a>
+							</Link>
 						</li>
 						{#each docsMenu.sections as { title, href, items }}
 							<li class="space-y-2">
-								<a {href} class="font-bold text-xl" on:click={closeMenu}>
+								<Link to={href} class="font-bold text-xl" on:click={closeMenu}>
 									{title}
-								</a>
+								</Link>
 								<ul class="space-y-1 text-lg">
-									{#each items as { title, href }}
-										<li class:active={$page.url.hash === getHash(href)}>
-											<a {href} class="w-full ml-4" on:click={closeMenu}>
+									{#each items as { title, anchor }}
+										<li>
+											<a href={anchor} class="w-full ml-4" on:click={closeMenu}>
 												{title}
 											</a>
 										</li>
@@ -88,14 +86,18 @@
 				</div>
 			{/if}
 			<ul class="flex gap-8 font-medium max-lg:hidden">
-				{#each navMenu as { title, href, openInNewTab }}
+				<li>
+					<Link to="/docs/introduction" class="transition-all hover:text-muted-foreground/50">
+						Docs
+					</Link>
+				</li>
+				{#each navMenu as { title, href }}
 					<li>
 						<a
 							{href}
-							target={openInNewTab ? '_blank' : ''}
-							rel={openInNewTab ? 'noopener noreferrer' : ''}
+							target="_blank"
+							rel="noopener noreferrer"
 							class="transition-all hover:text-muted-foreground/50"
-							on:click={closeMenu}
 						>
 							{title}
 						</a>
@@ -106,9 +108,3 @@
 	</header>
 	<slot />
 </div>
-
-<style>
-	.active {
-		@apply rounded bg-muted border border-border;
-	}
-</style>

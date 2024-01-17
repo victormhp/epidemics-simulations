@@ -1,14 +1,11 @@
 export const navMenu = [
-	{ title: 'Docs', href: '/docs/introduction', openInNewTab: false },
 	{
 		title: 'EoN Module',
-		href: 'https://epidemicsonnetworks.readthedocs.io/en/latest/EoN.html',
-		openInNewTab: true
+		href: 'https://epidemicsonnetworks.readthedocs.io/en/latest/EoN.html'
 	},
 	{
 		title: 'Github',
-		href: 'https://github.com/victormhp/epidemics-sveltekit-flask',
-		openInNewTab: true
+		href: 'https://github.com/victormhp/epidemics-sveltekit-flask'
 	}
 ];
 
@@ -20,9 +17,9 @@ export const docsMenu = {
 			items: [
 				{
 					title: 'Epidemics Simulations',
-					href: '/docs/introduction#epidemics-simulations'
+					anchor: '#epidemics-simulations'
 				},
-				{ title: 'EoN Module', href: '/docs/introduction#eon-module' }
+				{ title: 'EoN Module', anchor: '#eon-module' }
 			]
 		},
 		{
@@ -31,13 +28,13 @@ export const docsMenu = {
 			items: [
 				{
 					title: 'Upload your network',
-					href: '/docs/chart#upload-your-network'
+					anchor: '#upload-your-network'
 				},
-				{ title: 'Form Data', href: '/docs/chart#form-data' },
-				{ title: 'YAML', href: '/docs/chart#yaml' },
+				{ title: 'Form Data', anchor: '#form-data' },
+				{ title: 'YAML', anchor: '#yaml' },
 				{
 					title: 'Simulation Investigation',
-					href: '/docs/chart#simulation-investigation-object'
+					anchor: '#simulation-investigation-object'
 				}
 			]
 		},
@@ -47,11 +44,11 @@ export const docsMenu = {
 			items: [
 				{
 					title: 'Download Inputs',
-					href: '/docs/download#download-inputs'
+					anchor: '#download-inputs'
 				},
 				{
 					title: 'Download Chart',
-					href: '/docs/download#download-chart'
+					anchor: '#download-chart'
 				}
 			]
 		}

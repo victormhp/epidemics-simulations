@@ -7,16 +7,16 @@ from flask_cors import CORS
 from .routes import chart_routes
 
 
-# When the site is running in packaged form, the templates are inside a directory 
+# When the site is running in packaged form, the templates are inside a directory
 # called _MEIxxxxxx under the temp directory and you have to tell Flask about this.
-if getattr(sys, 'frozen', False):
-    static_folder = os.path.join(sys._MEIPASS, './build')
-    app = Flask(__name__, static_folder=static_folder, static_url_path='/')
+if getattr(sys, "frozen", False):
+    static_folder = os.path.join(sys._MEIPASS, "./build")
+    app = Flask(__name__, static_folder=static_folder, static_url_path="/")
 else:
-    app = Flask(__name__, static_folder="../../build", static_url_path='/')
+    app = Flask(__name__, static_folder="../../build", static_url_path="/")
 
 
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app)
 
 
 @app.route("/")

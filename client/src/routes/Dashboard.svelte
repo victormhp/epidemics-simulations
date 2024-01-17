@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
+	import '$lib/styles/index.css';
 	import { ChartForm, ChartFormYaml, ChartFormSim, EpidemicsChart } from '$lib/components';
 	import { Tab, TabGroup } from '$lib/components/ui';
 	import { chartResponse } from '$lib/stores';
@@ -10,13 +11,6 @@
 
 	let tabSet: number = 0;
 </script>
-
-<svelte:head>
-	<title>Epidemics Simulations</title>
-	<meta property="og:type" content="dashboard" />
-	<meta property="og:title" content="Epidemics Simulations" />
-	<meta property="og:description" content="Dashboard to generate charts" />
-</svelte:head>
 
 <main class="w-full h-auto grid grid-cols-1 gap-8 p-8 pt-28 xl:grid-cols-[2fr_5fr]">
 	<section class="space-y-8 h-fit">

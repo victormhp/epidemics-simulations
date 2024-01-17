@@ -9,7 +9,7 @@
 	let yamlFile: FileList;
 
 	async function generateChart(event: SubmitEvent) {
-		const url = MODE === 'development' ? 'http://localhost:8000/api/yaml' : '/api/yaml';
+		const url = MODE === 'development' ? 'http://localhost:8997/api/yaml' : '/api/yaml';
 		await generateChartFromData(event, url);
 	}
 </script>

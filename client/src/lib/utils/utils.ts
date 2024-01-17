@@ -26,8 +26,6 @@ export function clickOutside(node: HTMLElement) {
 
 export const matchSimulation = (name: string) => name.match(/Simulation ([A-Z]) - (\d+)/);
 
-export const getHash = (url: string) => `#${url.split('#')[1]}`;
-
 export function formatFileSize(bytes: number) {
 	if (bytes == 0) return '0 Bytes';
 

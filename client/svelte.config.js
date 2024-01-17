@@ -1,5 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
-import { vitePreprocess } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 import { mdsvex, escapeSvelte } from 'mdsvex';
 import shiki from 'shiki';
@@ -19,22 +18,10 @@ const mdsvexOptions = {
 	}
 };
 
-/** @type {import('@sveltejs/kit').Config} */
+/** @type {import('@sveltejs').Config} */
 const config = {
 	extensions: ['.svelte', '.md'],
-	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
-	kit: {
-		adapter: adapter({
-			pages: '../build',
-			assets: '../build',
-			fallback: 'index.html',
-			precompress: false,
-			strict: true
-		}),
-		prerender: {
-			handleMissingId: 'ignore'
-		}
-	}
+	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)]
 };
 
 export default config;
