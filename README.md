@@ -1,8 +1,8 @@
-![](client/static/images/eon.png)
+![](client/public/images/eon.png)
 
 # Epidemics Simulations
 
-Epidemics Simulations is a web application that allows you to create and visualize epidemics on networks. The application is built using SvelteKit as a Static Site Generator (SSG) for the frontend and Flask as the backend web server.
+Epidemics Simulations is a web application that allows you to create and visualize epidemics on networks. The application is built using Svelte for the frontend and Flask as the backend web server.
 
 ## Requirements
 
@@ -14,17 +14,14 @@ Ensure you have the following prerequisites installed on your system:
 
 ## Installation
 
-Clone the repository
+Clone the repository and navigate to the directory
 
 ```sh
-git clone https://github.com/victormhp/epidemics-sveltekit-flask.git
+git clone https://github.com/victormhp/epidemics-simulations.git
+cd epidemics-simulations.git
 ```
 
-Navigate to the project directory
-
-```sh
-cd epidemics-sveltkit-flask.git
-```
+### Option 1: Manually
 
 ```sh
 # Install and build frontend
@@ -42,10 +39,38 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Run the flask server
+Run the flask server for developement
 
 ```sh
 python index.py
+```
+
+Run for production with gunicorn
+
+```sh
+gunicorn --bind 0.0.0.0:8997 --timeout 600 wsgi:app
+```
+
+### Option 2: Docker
+
+For a convenient and containerized deployment, you can use Docker.
+
+Build docker image for the API
+
+```sh
+docker build -f Dockerfile.api -t eon-api .
+```
+
+Build docker image for the client and the nginx server
+
+```sh
+docker build -f Dockerfile.client -t eon-client .
+```
+
+Run docker compose to orchestrate the containers
+
+```sh
+docker compose up
 ```
 
 ## Desktop App
