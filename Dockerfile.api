@@ -1,0 +1,16 @@
+FROM python:3.9
+WORKDIR /app
+
+# Copy the requirements file first to leverage Docker cache
+COPY server/requirements.txt ./
+RUN pip install -r requirements.txt
+
+# Copy the source code
+COPY server/src ./src
+COPY server/index.py ./
+COPY server/wsgi.py ./
+
+ENV FLASK_ENV production
+
+EXPOSE 8997
+CMD ["gunicorn", "--timeout", "600", "--bind", "0.0.0.0:8997", "wsgi:app"]

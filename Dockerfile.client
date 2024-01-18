@@ -1,0 +1,18 @@
+FROM node:20-alpine as build-step
+
+# Install pnpm globally
+RUN npm install -g pnpm
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+COPY ./client ./client
+
+WORKDIR /app/client
+RUN pnpm install
+RUN pnpm build
+
+# Build step #2: build an nginx container
+FROM nginx:stable-alpine
+COPY --from=build-step /app/build /usr/share/nginx/html
+COPY deployment/nginx.default.conf /etc/nginx/conf.d/default.conf
